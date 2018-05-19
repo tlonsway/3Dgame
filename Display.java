@@ -17,7 +17,6 @@ public class Display extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for(ZObject z : objects) {
-            System.out.println(z.getType());
             if (z.getType().equals("Polygon")) {
                 if (z.getPolygon().getOne().getZ() > 0 && z.getPolygon().getTwo().getZ() > 0 && z.getPolygon().getThree().getZ() > 0) {
                     double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getZ(),1},FOV,ASPECT,5.0,100.0);
@@ -27,12 +26,57 @@ public class Display extends JComponent {
                     int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
                     g.setColor(z.getPolygon().getColor());
                     g.fillPolygon(xp,yp,3);
-                    System.out.println("rendering");
                 }
             }        
         }
     }
     public void update(ArrayList<ZObject> in) {
         objects=in;
+    }  
+    public void move(char dir, double dis) {
+        ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
+        double xdist = 0;
+        double ydist = 0;
+        double zdist = 0;
+        if (dir == 'x') {
+            xdist = dis;
+        }
+        if (dir == 'y') {
+            ydist = dis;
+        }
+        if (dir == 'z') {
+            zdist = dis;
+        }
+        for (ZObject zo : objects) {
+            if (zo.getType().equals("Polygon")) {
+                double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
+                double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
+                double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);
+                OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
+                OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
+                OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
+                tempzobj.add(new ZObject(dpone,dptwo,dpthree,zo.getColor()));                
+            }
+        }
+        objects = tempzobj;
+        draw();
     }   
+    public void look(char ax, double angle) {
+        ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
+        ArrayList<ZObject> spzobjects = new ArrayList<ZObject>();
+        spzobjects.addAll(objects);
+        for (ZObject zo : spzobjects) {
+            if (zo.getType().equals("Polygon")) {
+                double[] oreturned = manipulate.rotate(zo.getOneList(), ax, angle);          
+                double[] twreturned = manipulate.rotate(zo.getTwoList(), ax, angle);
+                double[] trreturned = manipulate.rotate(zo.getThreeList(), ax, angle);
+                OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
+                OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
+                OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
+                tempzobj.add(new ZObject(dpone,dptwo,dpthree,zo.getColor()));                
+            }
+        }
+        objects = tempzobj;
+        draw();
+    }    
 }
