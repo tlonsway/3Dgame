@@ -20,5 +20,6 @@ public class Init {
         d.setVisible(true);
         d.draw();
         frame.addKeyListener(new KeyboardThread(d));
+        (new Thread(new GravityThread(d))).start();
     }
 }

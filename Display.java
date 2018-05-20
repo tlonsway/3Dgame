@@ -8,6 +8,9 @@ public class Display extends JComponent {
     public static final int FOV = 90;
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
+    double playerx;
+    double playery;
+    double playerz;
     public Display(ArrayList<ZObject> in) {
         objects = in;
     }
@@ -19,8 +22,8 @@ public class Display extends JComponent {
         for(ZObject z : objects) {
             if (z.getType().equals("Polygon")) {
                 if (z.getPolygon().getOne().getZ() > 0 && z.getPolygon().getTwo().getZ() > 0 && z.getPolygon().getThree().getZ() > 0) {
-                    double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getZ(),1},FOV,ASPECT,5.0,100.0);
-                    double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getZ(),1},FOV,ASPECT,5.0,100.0);
+                    double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getZ(),1},FOV,ASPECT,0.0,100.0);
+                    double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getZ(),1},FOV,ASPECT,0.0,100.0);
                     double[] threeproj = project.project2D(new double[]{z.getPolygon().getThree().getX(),z.getPolygon().getThree().getY(),z.getPolygon().getThree().getZ(),1},FOV,ASPECT,5.0,100.0);
                     int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0])};
                     int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
@@ -40,12 +43,15 @@ public class Display extends JComponent {
         double zdist = 0;
         if (dir == 'x') {
             xdist = dis;
+            playerx+=dis;
         }
         if (dir == 'y') {
             ydist = dis;
+            playery+=dis;
         }
         if (dir == 'z') {
             zdist = dis;
+            playerz+=dis;
         }
         for (ZObject zo : objects) {
             if (zo.getType().equals("Polygon")) {
@@ -61,7 +67,7 @@ public class Display extends JComponent {
         objects = tempzobj;
         draw();
     }   
-    public void look(char ax, double angle) {
+    /*public void look(char ax, double angle) {
         ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
         ArrayList<ZObject> spzobjects = new ArrayList<ZObject>();
         spzobjects.addAll(objects);
@@ -78,5 +84,23 @@ public class Display extends JComponent {
         }
         objects = tempzobj;
         draw();
-    }    
+    } */
+    public double getPlayerX() {
+        return playerx;
+    }
+    public double getPlayerY() {
+        return playery;
+    }
+    public double getPlayerZ() {
+        return playerz;
+    }
+    public void setPlayerX(double x) {
+        playerx=x;
+    }
+    public void setPlayerY(double y) {
+        playery=y;
+    }
+    public void setPlayerZ(double z) {
+        playerz=z;
+    }
 }
