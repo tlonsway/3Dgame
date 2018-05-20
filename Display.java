@@ -11,39 +11,38 @@ public class Display extends JComponent {
     double playerx;
     double playery;
     double playerz;
+    boolean a;
+    boolean d;
+    boolean w;
+    boolean s;
     public Display(ArrayList<ZObject> in) {
         objects = in;
     }
     public void draw() {
+        if (a) 
+            this.move('x',.5);
+        if (d)
+            this.move('x', -.5);
+        if (w)
+            this.move('z',-.5);
+        if (s)
+            this.move('z',.5);
         this.repaint();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for(ZObject z : objects) {
             if (z.getType().equals("Polygon")) {
-                //if (z.getPolygon().getOne().getZ() > 0 && z.getPolygon().getTwo().getZ() > 0 && z.getPolygon().getThree().getZ() > 0) {
-                    /*if (z.getPolygon().getOne().getZ()<=0) {
-                        z.getPolygon().getOne().setZ(.01);
-                    }
-                    if (z.getPolygon().getTwo().getZ()<=0) {
-                        z.getPolygon().getTwo().setZ(.01);
-                    }
-                    if (z.getPolygon().getThree().getZ()<=0) {
-                        z.getPolygon().getThree().setZ(.01);
-                    }    
-                    System.out.println(z.getPolygon().getOne().getZ());
-                    System.out.println(z.getPolygon().getTwo().getZ());
-                    System.out.println(z.getPolygon().getThree().getZ());*/
-                    double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
-                    double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
-                    double[] threeproj = project.project2D(new double[]{z.getPolygon().getThree().getX(),z.getPolygon().getThree().getY(),z.getPolygon().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
-                    int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0])};
-                    int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
-                    g.setColor(z.getPolygon().getColor());
-                    g.fillPolygon(xp,yp,3);
-                //}
+                double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                double[] threeproj = project.project2D(new double[]{z.getPolygon().getThree().getX(),z.getPolygon().getThree().getY(),z.getPolygon().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
+                int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0])};
+                int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
+                g.setColor(z.getPolygon().getColor());
+                g.fillPolygon(xp,yp,3);
             }        
         }
+        //draw();
     }
     public void update(ArrayList<ZObject> in) {
         objects=in;
@@ -77,26 +76,8 @@ public class Display extends JComponent {
             }
         }
         objects = tempzobj;
-        draw();
+        //draw();
     }   
-    /*public void look(char ax, double angle) {
-        ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
-        ArrayList<ZObject> spzobjects = new ArrayList<ZObject>();
-        spzobjects.addAll(objects);
-        for (ZObject zo : spzobjects) {
-            if (zo.getType().equals("Polygon")) {
-                double[] oreturned = manipulate.rotate(zo.getOneList(), ax, angle);          
-                double[] twreturned = manipulate.rotate(zo.getTwoList(), ax, angle);
-                double[] trreturned = manipulate.rotate(zo.getThreeList(), ax, angle);
-                OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
-                OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
-                OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
-                tempzobj.add(new ZObject(dpone,dptwo,dpthree,zo.getColor()));                
-            }
-        }
-        objects = tempzobj;
-        draw();
-    } */
     public double getPlayerX() {
         return playerx;
     }
@@ -114,5 +95,29 @@ public class Display extends JComponent {
     }
     public void setPlayerZ(double z) {
         playerz=z;
+    }
+    public void aPress() {
+        a=true;
+    }
+    public void aRelease() {
+        a=false;
+    }
+    public void dPress() {
+        d=true;
+    }
+    public void dRelease() {
+        d=false;
+    }
+    public void wPress() {
+        w=true;
+    }
+    public void wRelease() {
+        w=false;
+    }
+    public void sPress() {
+        s=true;
+    }
+    public void sRelease() {
+        s=false;
     }
 }

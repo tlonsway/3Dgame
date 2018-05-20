@@ -22,5 +22,6 @@ public class Init {
         GravityThread gt = new GravityThread(d);
         (new Thread(gt)).start();
         frame.addKeyListener(new KeyboardThread(d,gt));
+        (new Thread(new FrameThread(d))).start();
     }
 }
