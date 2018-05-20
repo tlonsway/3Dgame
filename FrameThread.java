@@ -1,6 +1,6 @@
 public class FrameThread implements Runnable {
     Display dis;
-    double fps = 45;
+    double fps = 60;
     public FrameThread(Display d) {
         dis=d;
     }

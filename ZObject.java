@@ -5,6 +5,7 @@ public class ZObject implements Comparable<ZObject> {
     OtherPoint p1;
     OtherPoint p2;
     OtherPoint p3;
+    OtherPoint p4;
     Color c;
     public ZObject() {
     }    
@@ -27,6 +28,22 @@ public class ZObject implements Comparable<ZObject> {
         p3 = pthree;
         c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
         //c = new Color(0,(int)(Math.random()*256),0);
+    }
+    public ZObject(OtherPoint pone, OtherPoint ptwo, OtherPoint pthree, OtherPoint pfour) {
+        type="Quad";
+        p1 = pone;
+        p2 = ptwo;
+        p3 = pthree;
+        p4 = pfour;
+        c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+    }
+    public ZObject(OtherPoint pone, OtherPoint ptwo, OtherPoint pthree, OtherPoint pfour, Color co) {
+        type="Quad";
+        p1 = pone;
+        p2 = ptwo;
+        p3 = pthree;
+        p4 = pfour;
+        c = co;
     }    
     public double getZ() {
         //FIND POINT WITH CLOSEST Z
@@ -40,6 +57,8 @@ public class ZObject implements Comparable<ZObject> {
         //return closestpoint.getZ();
         if (type.equals("Polygon")) {
             return (p1.getZ()+p2.getZ()+p3.getZ())/3;
+        } else if (type.equals("Quad")) {
+            return (p1.getZ()+p2.getZ()+p3.getZ()+p4.getZ())/4;
         } else {
             return (p1.getZ()+p2.getZ())/2;
         }
@@ -56,11 +75,17 @@ public class ZObject implements Comparable<ZObject> {
     public OtherPoint getThree() {
         return p3;
     }
+    public OtherPoint getFour() {
+        return p4;
+    }
     public Polygon getPolygon() {
         return new Polygon(p1,p2,p3,c);
     }
     public Vector getVector() {
         return new Vector(p1,p2);
+    }
+    public Quad getQuad() {
+        return new Quad(p1,p2,p3,p4,c);
     }
     public Color getColor() {
         return c;
@@ -85,4 +110,7 @@ public class ZObject implements Comparable<ZObject> {
     public double[] getThreeList() {
         return new double[]{p3.getX(),p3.getY(),p3.getZ(),1};
     }    
+    public double[] getFourList() {
+        return new double[]{p4.getX(),p4.getY(),p4.getZ(),1};
+    }
 }

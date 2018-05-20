@@ -54,7 +54,16 @@ public class Display extends JComponent {
                 int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
                 g.setColor(z.getPolygon().getColor());
                 g.fillPolygon(xp,yp,3);
-            }        
+            } else if (z.getType().equals("Quad")) {
+                double[] oneproj = project.project2D(new double[]{z.getQuad().getOne().getX(),z.getQuad().getOne().getY(),z.getQuad().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                double[] twoproj = project.project2D(new double[]{z.getQuad().getTwo().getX(),z.getQuad().getTwo().getY(),z.getQuad().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                double[] threeproj = project.project2D(new double[]{z.getQuad().getThree().getX(),z.getQuad().getThree().getY(),z.getQuad().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);     
+                double[] fourproj = project.project2D(new double[]{z.getQuad().getFour().getX(),z.getQuad().getFour().getY(),z.getQuad().getFour().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
+                int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
+                int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
+                g.setColor(z.getQuad().getColor());
+                g.fillPolygon(xp,yp,4);
+            }
         }
         //draw();
     }
@@ -87,6 +96,16 @@ public class Display extends JComponent {
                 OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
                 OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
                 tempzobj.add(new ZObject(dpone,dptwo,dpthree,zo.getColor()));                
+            } else if (zo.getType().equals("Quad")) {
+                double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
+                double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
+                double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);   
+                double[] freturned = manipulate.translate(zo.getFourList(), xdist, ydist, zdist);
+                OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
+                OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
+                OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
+                OtherPoint dpfour = new OtherPoint(freturned[0],freturned[1],freturned[2]);
+                tempzobj.add(new ZObject(dpone,dptwo,dpthree,dpfour,zo.getColor()));
             }
         }
         objects = tempzobj;
