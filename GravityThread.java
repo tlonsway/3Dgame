@@ -14,10 +14,10 @@ public class GravityThread implements Runnable {
                 e.printStackTrace();
             }
             while(!jumping) {
-                if (dis.getPlayerY()>0) {
+                if (dis.getPlayerY()>.025) {
                     dis.move('y',-.025);
-                    dis.setPlayerY(dis.getPlayerY()-.025);
-                    System.out.println("moving");
+                    //dis.setPlayerY((dis.getPlayerY()-.025));
+                    //System.out.println("moving");
                 }
                 try {
                     Thread.sleep(1);

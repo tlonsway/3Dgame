@@ -17,7 +17,8 @@ public class Display extends JComponent {
     boolean w;
     boolean s;
     boolean shift;
-    double mov = .5;
+    double mov = 0.5;
+    double totalYDist = 0;
     public Display(ArrayList<ZObject> in) {
         objects = in;
         for (int i=0;i<100;i++) {
@@ -25,6 +26,9 @@ public class Display extends JComponent {
             int y = (int)(Math.random()*HEIGHT);
             stars.add(new Star(x,y));
         }
+        playery=0;
+        playerx=0;
+        playerz=0;
     }
     public void draw() {
         if (shift) 
@@ -43,9 +47,12 @@ public class Display extends JComponent {
         if (s) {
             this.move('z',mov);
         }
-        if (playery<.025&&playery!=0) {
-            playery=0;
-            System.out.println(playery);
+        playery=((double)((int)(playery*1000)))/1000;
+        if (playery<.03&&playery!=0) {
+            //System.out.println("y: " + playery);
+            this.move('y',-playery);
+            //playery=0;
+            //System.out.println("y:" + playery);
         }
         this.repaint();
     }
@@ -98,8 +105,15 @@ public class Display extends JComponent {
             playerx+=dis;
         }
         if (dir == 'y') {
+            dis=((double)((int)(dis*1000)))/1000;
+            //System.out.println("YDist plus dis: " + (totalYDist+dis));
+            //System.out.println("Before YDist: " + totalYDist);
+            //System.out.println("Before dis: " + dis);
             ydist = dis;
             playery+=dis;
+            totalYDist+=dis;
+            //System.out.println("dis: " + dis);
+            //System.out.println("YDist: " + totalYDist);
         }
         if (dir == 'z') {
             zdist = dis;

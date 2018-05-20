@@ -10,13 +10,14 @@ public class JumpingThread implements Runnable {
     public void run() {
         gr.jump();
         kt.jump();
+        //System.out.println("before jump player height: " + dis.getPlayerY());
         for(int i=0;i<70;i++) {
             if (i<30) {
-                dis.move('y',.2);
-                dis.setPlayerY(dis.getPlayerY()+.2);
+                dis.move('y',0.2);
+                //dis.setPlayerY(dis.getPlayerY()+0.2);
             } else {
                 dis.move('y',.1);
-                dis.setPlayerY(dis.getPlayerY()+.1);
+                //dis.setPlayerY(dis.getPlayerY()+0.1);
             }
             try {
                 Thread.sleep(5);
@@ -24,13 +25,15 @@ public class JumpingThread implements Runnable {
                 e.printStackTrace();
             }
         }
+        //System.out.println("after jump player height: " + dis.getPlayerY());
         try {
             Thread.sleep(50);
         } catch (Exception e) {
             e.printStackTrace();
         }
         gr.unjump();
-        System.out.println("finished jump");
+        //System.out.println("after jump waiting finished height: " + dis.getPlayerY());
+        //System.out.println("finished jump");
         while(dis.getPlayerY()>0) {
             try {
                 Thread.sleep(1);
@@ -38,7 +41,8 @@ public class JumpingThread implements Runnable {
                 e.printStackTrace();
             }
         }
-        System.out.println("finished jump wait");
+        System.out.println("after hit ground height: " + dis.getPlayerY());
+        //System.out.println("finished jump wait");
         kt.unjump();
     }
 }
