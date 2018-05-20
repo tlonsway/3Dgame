@@ -77,8 +77,8 @@ public class Display extends JComponent {
                 //java.awt.Polygon p = new java.awt.Polygon();
                 //g.fillPolygon(xp,yp,4);
                 g2.fill(new java.awt.Polygon(xp,yp,4));
-                Color w2 = new Color(255,255,255,125);
-                Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),125);
+                Color w2 = new Color(255,255,255,180);
+                Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),180);
                 g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,w2,WIDTH/2, 0,z2));
                 g2.draw(new java.awt.Polygon(xp,yp,4));
             }
