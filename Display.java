@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.util.*;
 public class Display extends JComponent {
     ArrayList<ZObject> objects = new ArrayList<ZObject>();
+    ArrayList<Star> stars = new ArrayList<Star>();
     public static final int ASPECT = 1;
     public static final int FOV = 90;
     public static final int WIDTH = 800;
@@ -19,6 +20,11 @@ public class Display extends JComponent {
     double mov = .5;
     public Display(ArrayList<ZObject> in) {
         objects = in;
+        for (int i=0;i<100;i++) {
+            int x = (int)(Math.random()*WIDTH);
+            int y = (int)(Math.random()*HEIGHT);
+            stars.add(new Star(x,y));
+        }
     }
     public void draw() {
         if (shift) 
@@ -45,6 +51,10 @@ public class Display extends JComponent {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.setColor(Color.WHITE);
+        for (Star s: stars) {
+            g.drawRect(s.getX(),s.getY(),2,2);
+        }
         for(ZObject z : objects) {
             if (z.getType().equals("Polygon")) {
                 double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
@@ -61,8 +71,16 @@ public class Display extends JComponent {
                 double[] fourproj = project.project2D(new double[]{z.getQuad().getFour().getX(),z.getQuad().getFour().getY(),z.getQuad().getFour().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
                 int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
                 int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
-                g.setColor(z.getQuad().getColor());
-                g.fillPolygon(xp,yp,4);
+                //g.setColor(z.getQuad().getColor());
+                Graphics2D g2=(Graphics2D)(g);
+                g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,Color.WHITE,WIDTH/2, 0,z.getQuad().getColor()));
+                //java.awt.Polygon p = new java.awt.Polygon();
+                //g.fillPolygon(xp,yp,4);
+                g2.fill(new java.awt.Polygon(xp,yp,4));
+                Color w2 = new Color(255,255,255,125);
+                Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),125);
+                g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,w2,WIDTH/2, 0,z2));
+                g2.draw(new java.awt.Polygon(xp,yp,4));
             }
         }
         //draw();

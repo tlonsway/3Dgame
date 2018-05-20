@@ -12,11 +12,11 @@ public class JumpingThread implements Runnable {
         kt.jump();
         for(int i=0;i<70;i++) {
             if (i<30) {
-                dis.move('y',.07);
-                dis.setPlayerY(dis.getPlayerY()+.07);
+                dis.move('y',.2);
+                dis.setPlayerY(dis.getPlayerY()+.2);
             } else {
-                dis.move('y',.04);
-                dis.setPlayerY(dis.getPlayerY()+.04);
+                dis.move('y',.1);
+                dis.setPlayerY(dis.getPlayerY()+.1);
             }
             try {
                 Thread.sleep(1);
