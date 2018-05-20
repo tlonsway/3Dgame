@@ -22,18 +22,23 @@ public class Display extends JComponent {
         for(ZObject z : objects) {
             if (z.getType().equals("Polygon")) {
                 //if (z.getPolygon().getOne().getZ() > 0 && z.getPolygon().getTwo().getZ() > 0 && z.getPolygon().getThree().getZ() > 0) {
-                    if (!(z.getPolygon().getOne().getZ()<0&&z.getPolygon().getTwo().getZ()<0&&z.getPolygon().getThree().getZ()<0)) {
-                        
+                    /*if (z.getPolygon().getOne().getZ()<=0) {
+                        z.getPolygon().getOne().setZ(.01);
                     }
-                    double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getZ(),1},FOV,ASPECT,0.0,100.0);
-                    double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getZ(),1},FOV,ASPECT,0.0,100.0);
-                    double[] threeproj = project.project2D(new double[]{z.getPolygon().getThree().getX(),z.getPolygon().getThree().getY(),z.getPolygon().getThree().getZ(),1},FOV,ASPECT,5.0,100.0);
-
+                    if (z.getPolygon().getTwo().getZ()<=0) {
+                        z.getPolygon().getTwo().setZ(.01);
+                    }
+                    if (z.getPolygon().getThree().getZ()<=0) {
+                        z.getPolygon().getThree().setZ(.01);
+                    }    
+                    System.out.println(z.getPolygon().getOne().getZ());
+                    System.out.println(z.getPolygon().getTwo().getZ());
+                    System.out.println(z.getPolygon().getThree().getZ());*/
+                    double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                    double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                    double[] threeproj = project.project2D(new double[]{z.getPolygon().getThree().getX(),z.getPolygon().getThree().getY(),z.getPolygon().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
                     int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0])};
                     int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
-
-                    
-                    
                     g.setColor(z.getPolygon().getColor());
                     g.fillPolygon(xp,yp,3);
                 //}

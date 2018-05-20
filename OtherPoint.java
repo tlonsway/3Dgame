@@ -25,4 +25,11 @@ public class OtherPoint {
     public double getZ() {
         return z;
     }
+    public double getSpecialZ() {
+        if (z<=0) {
+            return .01;
+        } else {
+            return z;
+        }
+    }
 }

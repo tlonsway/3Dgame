@@ -19,7 +19,8 @@ public class Init {
         frame.add(d);
         d.setVisible(true);
         d.draw();
-        frame.addKeyListener(new KeyboardThread(d));
-        (new Thread(new GravityThread(d))).start();
+        GravityThread gt = new GravityThread(d);
+        (new Thread(gt)).start();
+        frame.addKeyListener(new KeyboardThread(d,gt));
     }
 }
