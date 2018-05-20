@@ -24,6 +24,9 @@ public class KeyboardThread extends KeyAdapter {
         if (key == KeyEvent.VK_S) {
             dis.sPress();
         }
+        if (key == KeyEvent.VK_SHIFT) {
+            dis.shiftPress();
+        }
         if (key == KeyEvent.VK_SPACE) {
             if (!jumping) {
                 (new Thread(new JumpingThread(dis,gt,this))).start();
@@ -44,7 +47,10 @@ public class KeyboardThread extends KeyAdapter {
         }
         if (key == KeyEvent.VK_S) {
             dis.sRelease();
-        }        
+        }    
+        if (key == KeyEvent.VK_SHIFT) {
+            dis.shiftRelease();
+        }
         //dis.draw();
     }
     public void setDrawingPlane(Display d) {

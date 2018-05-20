@@ -15,18 +15,28 @@ public class Display extends JComponent {
     boolean d;
     boolean w;
     boolean s;
+    boolean shift;
+    double mov = .5;
     public Display(ArrayList<ZObject> in) {
         objects = in;
     }
     public void draw() {
-        if (a) 
-            this.move('x',.5);
-        if (d)
-            this.move('x', -.5);
-        if (w)
-            this.move('z',-.5);
-        if (s)
-            this.move('z',.5);
+        if (shift) 
+            mov = .9;
+        if (!shift)
+            mov = .5;
+        if (a) {
+            this.move('x',mov);
+        }
+        if (d) {
+            this.move('x', -mov);
+        }
+        if (w) {
+            this.move('z',-mov);
+        }
+        if (s) {
+            this.move('z',mov);
+        }
         this.repaint();
     }
     public void paintComponent(Graphics g) {
@@ -119,5 +129,11 @@ public class Display extends JComponent {
     }
     public void sRelease() {
         s=false;
+    }
+    public void shiftPress() {
+        shift=true;
+    }
+    public void shiftRelease() {
+        shift=false;
     }
 }
