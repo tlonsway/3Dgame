@@ -10,8 +10,8 @@ public class Init {
         frame.setSize(800,800);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ZObject one = new ZObject(new OtherPoint(-3,2,5),new OtherPoint(-3,2,20), new OtherPoint(3,2,5));
-        ZObject two = new ZObject(new OtherPoint(-3,2,20), new OtherPoint(3,2,5), new OtherPoint(3,2,20));
+        ZObject one = new ZObject(new OtherPoint(-30,4,5),new OtherPoint(-30,4,80), new OtherPoint(30,4,5));
+        ZObject two = new ZObject(new OtherPoint(-30,4,80), new OtherPoint(30,4,5), new OtherPoint(30,4,80));
         ArrayList<ZObject> samplein = new ArrayList<ZObject>();
         samplein.add(one);
         samplein.add(two);

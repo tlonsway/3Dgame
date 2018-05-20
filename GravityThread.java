@@ -9,8 +9,8 @@ public class GravityThread implements Runnable {
         while(true) {
             if (!jumping) {
                 if (dis.getPlayerY()>0) {
-                    dis.move('y',-.02);
-                    dis.setPlayerY(dis.getPlayerY()-.02);
+                    dis.move('y',-.015);
+                    dis.setPlayerY(dis.getPlayerY()-.015);
                 }
                 try {
                     Thread.sleep(1);

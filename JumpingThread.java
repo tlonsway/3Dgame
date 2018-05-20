@@ -16,7 +16,7 @@ public class JumpingThread implements Runnable {
                 dis.setPlayerY(dis.getPlayerY()+.07);
             } else {
                 dis.move('y',.04);
-                dis.setPlayerY(dis.getPlayerY()+.03);
+                dis.setPlayerY(dis.getPlayerY()+.04);
             }
             try {
                 Thread.sleep(1);

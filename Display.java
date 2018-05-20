@@ -37,6 +37,10 @@ public class Display extends JComponent {
         if (s) {
             this.move('z',mov);
         }
+        if (playery<.025&&playery!=0) {
+            playery=0;
+            System.out.println(playery);
+        }
         this.repaint();
     }
     public void paintComponent(Graphics g) {
