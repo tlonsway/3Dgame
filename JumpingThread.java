@@ -19,7 +19,7 @@ public class JumpingThread implements Runnable {
                 dis.setPlayerY(dis.getPlayerY()+.1);
             }
             try {
-                Thread.sleep(1);
+                Thread.sleep(5);
             } catch (Exception e) {
                 e.printStackTrace();
             }
