@@ -30,14 +30,15 @@ public class JumpingThread implements Runnable {
             e.printStackTrace();
         }
         gr.unjump();
+        System.out.println("finished jump");
         while(dis.getPlayerY()>0) {
-            System.out.println(dis.getPlayerY());
             try {
                 Thread.sleep(1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("finished jump wait");
         kt.unjump();
     }
 }

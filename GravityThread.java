@@ -7,18 +7,25 @@ public class GravityThread implements Runnable {
     }
     public void run() {
         while(true) {
-            if (!jumping) {
+            //System.out.println("loop");
+            try {
+                Thread.sleep(1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while(!jumping) {
                 if (dis.getPlayerY()>0) {
                     dis.move('y',-.025);
                     dis.setPlayerY(dis.getPlayerY()-.025);
+                    System.out.println("moving");
                 }
                 try {
                     Thread.sleep(1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }    
+            }  
+        }
     }
     public void jump() {
         jumping=true;
