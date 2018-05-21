@@ -3,6 +3,9 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import javafx.geometry.*;
+import java.awt.geom.*;
+import java.awt.geom.Point2D.*;
+import java.awt.MultipleGradientPaint.CycleMethod;
 public class Display extends JComponent {
     ArrayList<ZObject> objects = new ArrayList<ZObject>();
     ArrayList<Star> stars = new ArrayList<Star>();
@@ -56,6 +59,8 @@ public class Display extends JComponent {
             //playery=0;
             //System.out.println("y:" + playery);
         }*/
+
+        //System.out.println(playery);
         this.repaint();
     }
     public void paintComponent(Graphics g) {
@@ -81,12 +86,20 @@ public class Display extends JComponent {
             }
             if (s.getY()>HEIGHT/2) {
                 s.setY(s.getY()+1);
-            }
-            
-            g.drawRect(s.getX(),s.getY(),2,2);
-            
-            
-            
+            } 
+            /*java.awt.geom.Point2D center = new java.awt.geom.Point2D.Float(s.getX(), s.getX());
+            float radius = 10;
+            java.awt.geom.Point2D focus = new java.awt.geom.Point2D.Float(s.getX()-10, s.getY()-10);
+            float[] dist = {0.0f, 0.5f, 1.0f};
+            Color[] colors = {new Color(255,255,255,255), new Color(255,255,255,180), new Color(255,255,255,100)};
+            RadialGradientPaint p =
+            new RadialGradientPaint(center, radius, focus,
+                                 dist, colors,
+                                 CycleMethod.NO_CYCLE);
+            Graphics2D g2D = (Graphics2D)g; 
+            g2D.setPaint(p);
+            g2D.fillRect(s.getX(),s.getY(),5,5);*/
+            g.fillRect(s.getX(),s.getY(),2,2);
         }
         for(ZObject z : objects) {
             if (z.getType().equals("Polygon")) {

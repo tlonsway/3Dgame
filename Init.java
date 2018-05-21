@@ -73,5 +73,6 @@ public class Init {
         frame.addKeyListener(new KeyboardThread(d,gt));
         (new Thread(new FrameThread(d))).start();
         frame.getContentPane().setBackground(Color.BLACK);
+        (new Thread(new GroundChecker(d))).start();
     }
 }

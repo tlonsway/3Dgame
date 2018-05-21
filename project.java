@@ -13,7 +13,7 @@ public class project {
                                               {0,0,-1,0}};        
         double tempadd = 0;
         double[] result = new double[4];
-        //multiple the vector with the array
+        //multiple the vector with the array    
         for (int r1=0; r1<vector.length; r1++) {
             for (int c1=0; c1<vector.length; c1++) {
                 tempadd += matrix[r1][c1]*vector[c1];
