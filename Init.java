@@ -28,11 +28,11 @@ public class Init {
         int miny=10;
         int maxz=10;
         int minz=1;
-        int maxwidth=100;
-        int minwidth=20;
-        int maxlength=500;
-        int minlength=50;
-        for(int i=0;i<100;i++) {
+        int maxwidth=50;
+        int minwidth=15;
+        int maxlength=100;
+        int minlength=20;
+        for(int i=0;i<200;i++) {
             int randx = (int)((Math.random()*((maxdist+1)-mindist))+mindist);
             int randy = (int)((Math.random()*((maxy+1)-miny))+miny);
             int randz = (int)((Math.random()*((maxz+1)-minz))+minz);
@@ -73,7 +73,5 @@ public class Init {
         frame.addKeyListener(new KeyboardThread(d,gt));
         (new Thread(new FrameThread(d))).start();
         frame.getContentPane().setBackground(Color.BLACK);
-
-
     }
 }

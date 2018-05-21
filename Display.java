@@ -61,8 +61,32 @@ public class Display extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(new Color(255,255,255,180));
-        for (Star s: stars) {
+        for (int i=stars.size()-1;i>-1;i--) {
+            Star s = stars.get(i);
+            if (s.getX()<0||s.getY()<0||s.getX()>WIDTH||s.getY()>HEIGHT) {
+                stars.remove(i);
+                int x = (int)(Math.random()*WIDTH);
+                int y = (int)(Math.random()*HEIGHT);
+                stars.add(new Star(x,y));
+                continue;
+            } 
+            if (s.getX()<WIDTH/2) {
+                s.setX(s.getX()-1);
+            }
+            if (s.getX()>WIDTH/2) {
+                s.setX(s.getX()+1);
+            }
+            if (s.getY()<HEIGHT/2) {
+                s.setY(s.getY()-1);
+            }
+            if (s.getY()>HEIGHT/2) {
+                s.setY(s.getY()+1);
+            }
+            
             g.drawRect(s.getX(),s.getY(),2,2);
+            
+            
+            
         }
         for(ZObject z : objects) {
             if (z.getType().equals("Polygon")) {
