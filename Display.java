@@ -219,4 +219,7 @@ public class Display extends JComponent {
         }
         return false;
     }
+    public void addObject(ZObject z) {
+        objects.add(z);
+    }
 }
