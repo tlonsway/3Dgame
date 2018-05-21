@@ -15,9 +15,11 @@ public class Init {
         //ZObject one = new ZObject(new OtherPoint(-3,2,5),new OtherPoint(-3,2,10), new OtherPoint(3,2,5), new OtherPoint(3,2,10));
         ZObject one = new ZObject(new OtherPoint(-30,20,500),new OtherPoint(30,20,500),new OtherPoint(30,20,-100) , new OtherPoint(-30,20,-100));
         ZObject two = new ZObject(new OtherPoint(-15,20,1500), new OtherPoint(15,20,1500), new OtherPoint(15,20,5000), new OtherPoint(-15,20,5000));
+        ZObject three = new ZObject(new OtherPoint(-120,20,500),new OtherPoint(-60,20,500), new OtherPoint(-60,20,-100), new OtherPoint(-120,20,-100));
         ArrayList<ZObject> samplein = new ArrayList<ZObject>();
         samplein.add(one);
         samplein.add(two);
+        samplein.add(three);
         Display d = new Display(samplein);
         frame.add(d);
         d.setVisible(true);

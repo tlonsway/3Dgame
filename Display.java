@@ -198,10 +198,10 @@ public class Display extends JComponent {
         for (ZObject z : objects) {
             //System.out.println(z.getBounds2D().toString());
             if (z.getBounds2D().intersects(player)) {
-                System.out.println("found intersection");
+                //System.out.println("found intersection");
                 if (z.getTop()>highest) {
                     highest=z.getTop();
-                    System.out.println("new highest");
+                    //System.out.println("new highest");
                 }
             }
         }

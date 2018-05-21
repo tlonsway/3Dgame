@@ -34,7 +34,7 @@ public class JumpingThread implements Runnable {
         gr.unjump();
         //System.out.println("after jump waiting finished height: " + dis.getPlayerY());
         //System.out.println("finished jump");
-        while(dis.getPlayerY()>0) {
+        while(dis.getGround()>22) {
             try {
                 Thread.sleep(1);
             } catch (Exception e) {

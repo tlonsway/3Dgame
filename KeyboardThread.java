@@ -24,14 +24,14 @@ public class KeyboardThread extends KeyAdapter {
         if (key == KeyEvent.VK_S) {
             dis.sPress();
         }
-        if (key == KeyEvent.VK_SHIFT) {
-            dis.shiftPress();
-        }
         if (key == KeyEvent.VK_SPACE) {
-            if (!jumping) {
+            if (!jumping&&dis.getGround()>0) {
                 (new Thread(new JumpingThread(dis,gt,this))).start();
             }
         }
+        if (key == KeyEvent.VK_CONTROL) {
+            dis.shiftPress();
+        }        
         //dis.draw();
     }
     public void keyReleased(KeyEvent e) {

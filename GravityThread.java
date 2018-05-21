@@ -14,10 +14,15 @@ public class GravityThread implements Runnable {
                 e.printStackTrace();
             }
             while(!jumping) {
-                if (dis.getPlayerY()>dis.getGround()) {
+                //System.out.println("Player Y:" + dis.getPlayerY());
+                //System.out.println("Current ground level: " + dis.getGround());
+                /*if (dis.getPlayerY()>dis.getGround()||dis.getPlayerY()<dis.getGround()) {
                     dis.move('y',-.025);
                     //dis.setPlayerY((dis.getPlayerY()-.025));
                     //System.out.println("moving");
+                }*/
+                if (dis.getGround()>20||dis.getGround()<-.1) {
+                    dis.move('y',-.07);
                 }
                 /*if (dis.getCollision()==false) {
                     dis.move('y',-.025);
