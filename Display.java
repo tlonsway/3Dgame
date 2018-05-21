@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import javafx.geometry.*;
 public class Display extends JComponent {
     ArrayList<ZObject> objects = new ArrayList<ZObject>();
     ArrayList<Star> stars = new ArrayList<Star>();
@@ -48,12 +49,12 @@ public class Display extends JComponent {
             this.move('z',mov);
         }
         playery=((double)((int)(playery*1000)))/1000;
-        if (playery<.03&&playery!=0) {
+        /*if (playery<.03&&playery!=0) {
             //System.out.println("y: " + playery);
             this.move('y',-playery);
             //playery=0;
             //System.out.println("y:" + playery);
-        }
+        }*/
         this.repaint();
     }
     public void paintComponent(Graphics g) {
@@ -190,5 +191,32 @@ public class Display extends JComponent {
     }
     public void shiftRelease() {
         shift=false;
+    }
+    public double getGround() {
+        double highest=-100;
+        BoundingBox player = new BoundingBox(-3,-3,3,3);
+        for (ZObject z : objects) {
+            //System.out.println(z.getBounds2D().toString());
+            if (z.getBounds2D().intersects(player)) {
+                System.out.println("found intersection");
+                if (z.getTop()>highest) {
+                    highest=z.getTop();
+                    System.out.println("new highest");
+                }
+            }
+        }
+        return highest;
+    }
+    public boolean getCollision() {
+        boolean ret = false;
+        BoundingBox player = new BoundingBox(-3,3,-3,3,3,3);
+        for (ZObject z : objects) {
+            //System.out.println(z.getBounds3D().toString());
+            if (z.getBounds3D().intersects(player)) {
+                System.out.println("intersect");
+                return true;
+            }
+        }
+        return false;
     }
 }

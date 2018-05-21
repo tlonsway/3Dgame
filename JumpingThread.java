@@ -41,7 +41,7 @@ public class JumpingThread implements Runnable {
                 e.printStackTrace();
             }
         }
-        System.out.println("after hit ground height: " + dis.getPlayerY());
+        //System.out.println("after hit ground height: " + dis.getPlayerY());
         //System.out.println("finished jump wait");
         kt.unjump();
     }

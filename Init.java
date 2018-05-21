@@ -13,8 +13,8 @@ public class Init {
         //ZObject one = new ZObject(new OtherPoint(-30,4,5),new OtherPoint(-30,4,80), new OtherPoint(30,4,5));
         //ZObject two = new ZObject(new OtherPoint(-30,4,80), new OtherPoint(30,4,5), new OtherPoint(30,4,80));
         //ZObject one = new ZObject(new OtherPoint(-3,2,5),new OtherPoint(-3,2,10), new OtherPoint(3,2,5), new OtherPoint(3,2,10));
-        ZObject one = new ZObject(new OtherPoint(-30,3,500),new OtherPoint(30,3,500),new OtherPoint(30,3,100) , new OtherPoint(-30,3,100));
-        ZObject two = new ZObject(new OtherPoint(-15,5,1500), new OtherPoint(15,5,1500), new OtherPoint(15,5,5000), new OtherPoint(-15,5,5000));
+        ZObject one = new ZObject(new OtherPoint(-30,20,500),new OtherPoint(30,20,500),new OtherPoint(30,20,-100) , new OtherPoint(-30,20,-100));
+        ZObject two = new ZObject(new OtherPoint(-15,20,1500), new OtherPoint(15,20,1500), new OtherPoint(15,20,5000), new OtherPoint(-15,20,5000));
         ArrayList<ZObject> samplein = new ArrayList<ZObject>();
         samplein.add(one);
         samplein.add(two);

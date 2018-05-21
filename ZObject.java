@@ -1,5 +1,6 @@
 import java.util.*;
 import java.awt.*;
+import javafx.geometry.*;
 public class ZObject implements Comparable<ZObject> {
     String type;
     OtherPoint p1;
@@ -112,5 +113,24 @@ public class ZObject implements Comparable<ZObject> {
     }    
     public double[] getFourList() {
         return new double[]{p4.getX(),p4.getY(),p4.getZ(),1};
+    }
+    public double getTop() {
+        if (p1.getY()>p2.getY()&&p1.getY()>p3.getY()&&p1.getY()>p4.getY()) {
+            return p1.getY();
+        } else if (p2.getY()>p1.getY()&&p2.getY()>p3.getY()&&p2.getY()>p4.getY()) {
+            return p2.getY();
+        } else if (p3.getY()>p1.getY()&&p3.getY()>p1.getY()&&p3.getY()>p4.getY()) {
+            return p3.getY();
+        } else {
+            return p4.getY();
+        }
+    }
+    public BoundingBox getBounds2D() {
+        BoundingBox b = new BoundingBox(p4.getX(),p4.getZ(),p2.getX()-p4.getX(),p2.getZ()-p4.getZ());
+        //System.out.println(b.toString());
+        return b;
+    }
+    public BoundingBox getBounds3D() {
+        return new BoundingBox(p1.getX(),p1.getZ(),-p1.getY(),p3.getX(),p3.getZ(),-p3.getY()+1);
     }
 }

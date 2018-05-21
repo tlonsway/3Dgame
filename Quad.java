@@ -1,4 +1,5 @@
 import java.awt.*;
+import javafx.geometry.*;
 public class Quad {
     OtherPoint p1;
     OtherPoint p2;
@@ -46,4 +47,10 @@ public class Quad {
     public double[] getFourList() {
         return new double[]{p4.getX(),p4.getY(),p4.getZ(),1};
     }
+    public BoundingBox getBounds() {
+        BoundingBox b = new BoundingBox(p1.getX(),p1.getY(),p1.getZ(),p3.getX(),p3.getY(),p3.getZ());
+        System.out.println(b.toString());
+        return b;
+    }
+    
 }
