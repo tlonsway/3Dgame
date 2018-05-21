@@ -18,7 +18,7 @@ public class Display extends JComponent {
     boolean w;
     boolean s;
     boolean shift;
-    double mov = 0.5;
+    double mov = 1;
     double totalYDist = 0;
     public Display(ArrayList<ZObject> in) {
         objects = in;
@@ -33,9 +33,9 @@ public class Display extends JComponent {
     }
     public void draw() {
         if (shift) 
-            mov = .9;
+            mov = 2;
         if (!shift)
-            mov = .5;
+            mov = 1;
         if (a) {
             this.move('x',mov);
         }
@@ -59,7 +59,7 @@ public class Display extends JComponent {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.WHITE);
+        g.setColor(new Color(255,255,255,180));
         for (Star s: stars) {
             g.drawRect(s.getX(),s.getY(),2,2);
         }
@@ -81,12 +81,12 @@ public class Display extends JComponent {
                 int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
                 //g.setColor(z.getQuad().getColor());
                 Graphics2D g2=(Graphics2D)(g);
-                g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,Color.WHITE,WIDTH/2, 0,z.getQuad().getColor()));
+                g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,new Color(255,255,255,200),WIDTH/2, 0,z.getQuad().getColor()));
                 //java.awt.Polygon p = new java.awt.Polygon();
                 //g.fillPolygon(xp,yp,4);
                 g2.fill(new java.awt.Polygon(xp,yp,4));
-                Color w2 = new Color(255,255,255,180);
-                Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),180);
+                Color w2 = new Color(255,255,255,20);
+                Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),20);
                 g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,w2,WIDTH/2, 0,z2));
                 g2.draw(new java.awt.Polygon(xp,yp,4));
             }
@@ -193,8 +193,8 @@ public class Display extends JComponent {
         shift=false;
     }
     public double getGround() {
-        double highest=-100;
-        BoundingBox player = new BoundingBox(-3,-3,3,3);
+        double highest=-10000;
+        BoundingBox player = new BoundingBox(-7,-7,7,7);
         for (ZObject z : objects) {
             //System.out.println(z.getBounds2D().toString());
             if (z.getBounds2D().intersects(player)) {

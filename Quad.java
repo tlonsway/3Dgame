@@ -11,7 +11,7 @@ public class Quad {
         p2 = ptwo;
         p3 = pthree;
         p4 = pfour;
-        c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+        c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256),150);
     }
     public Quad(OtherPoint pone, OtherPoint ptwo, OtherPoint pthree, OtherPoint pfour, Color co) {
         p1 = pone;

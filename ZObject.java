@@ -27,7 +27,7 @@ public class ZObject implements Comparable<ZObject> {
         p1 = pone;
         p2 = ptwo;
         p3 = pthree;
-        c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+        c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256),150);
         //c = new Color(0,(int)(Math.random()*256),0);
     }
     public ZObject(OtherPoint pone, OtherPoint ptwo, OtherPoint pthree, OtherPoint pfour) {
@@ -36,7 +36,7 @@ public class ZObject implements Comparable<ZObject> {
         p2 = ptwo;
         p3 = pthree;
         p4 = pfour;
-        c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+        c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256),150);
     }
     public ZObject(OtherPoint pone, OtherPoint ptwo, OtherPoint pthree, OtherPoint pfour, Color co) {
         type="Quad";
