@@ -8,6 +8,7 @@ public class ZObject implements Comparable<ZObject> {
     OtherPoint p3;
     OtherPoint p4;
     Color c;
+    boolean touched = false;
     public ZObject() {
     }    
     public ZObject(OtherPoint pone, OtherPoint ptwo) {
@@ -38,13 +39,14 @@ public class ZObject implements Comparable<ZObject> {
         p4 = pfour;
         c = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256),150);
     }
-    public ZObject(OtherPoint pone, OtherPoint ptwo, OtherPoint pthree, OtherPoint pfour, Color co) {
+    public ZObject(OtherPoint pone, OtherPoint ptwo, OtherPoint pthree, OtherPoint pfour, Color co, boolean t) {
         type="Quad";
         p1 = pone;
         p2 = ptwo;
         p3 = pthree;
         p4 = pfour;
         c = co;
+        touched=t;
     }    
     public double getZ() {
         //FIND POINT WITH CLOSEST Z
@@ -132,5 +134,11 @@ public class ZObject implements Comparable<ZObject> {
     }
     public BoundingBox getBounds3D() {
         return new BoundingBox(p1.getX(),p1.getZ(),-p1.getY(),p3.getX(),p3.getZ(),-p3.getY()+1);
+    }
+    public boolean isTouched() {
+        return touched;
+    }
+    public void touch() {
+        touched=true;
     }
 }

@@ -20,6 +20,7 @@ public class Display extends JComponent {
     boolean shift;
     double mov = 1;
     double totalYDist = 0;
+    int score = 0;
     public Display(ArrayList<ZObject> in) {
         objects = in;
         for (int i=0;i<100;i++) {
@@ -91,6 +92,10 @@ public class Display extends JComponent {
                 g2.draw(new java.awt.Polygon(xp,yp,4));
             }
         }
+        g.setColor(new Color(255,0,0,200));
+        Font f = new Font("Courier New", Font.BOLD, 40);
+        g.setFont(f);
+        g.drawString("SCORE: " + score, 30, 50);
         //draw();
     }
     public void update(ArrayList<ZObject> in) {
@@ -138,7 +143,7 @@ public class Display extends JComponent {
                 OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
                 OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
                 OtherPoint dpfour = new OtherPoint(freturned[0],freturned[1],freturned[2]);
-                tempzobj.add(new ZObject(dpone,dptwo,dpthree,dpfour,zo.getColor()));
+                tempzobj.add(new ZObject(dpone,dptwo,dpthree,dpfour,zo.getColor(),zo.isTouched()));
             }
         }
         objects = tempzobj;
@@ -199,6 +204,10 @@ public class Display extends JComponent {
             //System.out.println(z.getBounds2D().toString());
             if (z.getBounds2D().intersects(player)) {
                 //System.out.println("found intersection");
+                if (!z.isTouched()) {
+                    score++;
+                    z.touch();
+                }
                 if (z.getTop()>highest) {
                     highest=z.getTop();
                     //System.out.println("new highest");
