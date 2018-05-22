@@ -5,9 +5,13 @@ public class GravityThread implements Runnable {
         dis=d;
         jumping=false;
     }
+    public GravityThread(Display d, boolean jump) {
+        dis=d;
+        jumping=jump;
+    }
     public void run() {
-        try {
-            while(true) {
+        while(true) {
+            try {
                 //System.out.println("loop");
                 try {
                     Thread.sleep(1);
@@ -34,13 +38,13 @@ public class GravityThread implements Runnable {
                         e.printStackTrace();
                     }
                 }  
-            }
-        } catch (Exception e) {
-            try{
-                (new Thread(new GravityThread(dis))).start();
-                System.out.println("Gravity thread crashed but was restarted due to error: " + e);
-            }catch (Exception e2) {
-                System.out.println("Gravity threading dead - program will break");
+            } catch (Exception e) {
+                try{
+                    (new Thread(new GravityThread(dis,jumping))).start();
+                    System.out.println("Gravity thread crashed but was restarted due to error: " + e);
+                }catch (Exception e2) {
+                    System.out.println("Gravity threading dead - program will break");
+                }
             }
         }
     }

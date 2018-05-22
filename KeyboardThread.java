@@ -29,7 +29,7 @@ public class KeyboardThread extends KeyAdapter {
                 dis.shiftPress();
             }    
             if (key == KeyEvent.VK_SPACE) {
-                if (!jumping&&dis.getGround()>0) {
+                if (!jumping&&dis.getGround()>0&&dis.getGround()<21) {
                     (new Thread(new JumpingThread(dis,gt,this))).start();
                 }
             }

@@ -146,8 +146,8 @@ public class Display extends JComponent {
         Font f = new Font("Courier New", Font.BOLD, 40);
         g.setFont(f);
         g.drawString("SCORE: " + score, 30, 50);
-        double[] oneproj = project.project2D(new double[]{-7,20,100,1},FOV,ASPECT,0.0,100.0);
-        double[] twoproj = project.project2D(new double[]{7,20,100,1},FOV,ASPECT,0.0,100.0);
+        double[] oneproj = project.project2D(new double[]{-7,20,50,1},FOV,ASPECT,0.0,100.0);
+        double[] twoproj = project.project2D(new double[]{7,20,50,1},FOV,ASPECT,0.0,100.0);
         double[] threeproj = project.project2D(new double[]{7,20,40,1},FOV,ASPECT,5.0,100.0);     
         double[] fourproj = project.project2D(new double[]{-7,20,40,1},FOV,ASPECT,5.0,100.0);
         int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
@@ -260,7 +260,7 @@ public class Display extends JComponent {
     }
     public double getGround() {
         double highest=10000;
-        BoundingBox player = new BoundingBox(-7,40,7,50);
+        BoundingBox player = new BoundingBox(-7,40,14,10);
         for (ZObject z : objects) {
             //System.out.println(z.getBounds2D().toString());
             if (z.getBounds2D().intersects(player)) {
