@@ -8,41 +8,54 @@ public class JumpingThread implements Runnable {
         kt=k;
     }
     public void run() {
-        gr.jump();
-        kt.jump();
-        //System.out.println("before jump player height: " + dis.getPlayerY());
-        for(int i=0;i<70;i++) {
-            if (i<30) {
-                dis.move('y',0.3);
-                //dis.setPlayerY(dis.getPlayerY()+0.2);
-            } else {
-                dis.move('y',.2);
-                //dis.setPlayerY(dis.getPlayerY()+0.1);
+        try{
+            gr.jump();
+            kt.jump();
+            //System.out.println("before jump player height: " + dis.getPlayerY());
+            for(int i=0;i<70;i++) {
+                if (i<30) {
+                    dis.move('y',0.3);
+                    //dis.setPlayerY(dis.getPlayerY()+0.2);
+                } else {
+                    dis.move('y',.2);
+                    //dis.setPlayerY(dis.getPlayerY()+0.1);
+                }
+                try {
+                    Thread.sleep(5);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+            //System.out.println("after jump player height: " + dis.getPlayerY());
             try {
-                Thread.sleep(5);
+                Thread.sleep(50);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        //System.out.println("after jump player height: " + dis.getPlayerY());
-        try {
-            Thread.sleep(50);
+            gr.unjump();
+            //System.out.println("after jump waiting finished height: " + dis.getPlayerY());
+            //System.out.println("finished jump");
+            while(dis.getGround()>22) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            //System.out.println("after hit ground height: " + dis.getPlayerY());
+            //System.out.println("finished jump wait");
+            kt.unjump();
         } catch (Exception e) {
-            e.printStackTrace();
+            gr.unjump();
+            while(dis.getGround()>22) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }   
+            kt.unjump();
+            System.out.println("jumping thread crashed but program continued after terminating jump");
         }
-        gr.unjump();
-        //System.out.println("after jump waiting finished height: " + dis.getPlayerY());
-        //System.out.println("finished jump");
-        while(dis.getGround()>22) {
-            try {
-                Thread.sleep(1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        //System.out.println("after hit ground height: " + dis.getPlayerY());
-        //System.out.println("finished jump wait");
-        kt.unjump();
     }
 }

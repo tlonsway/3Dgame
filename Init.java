@@ -22,9 +22,9 @@ public class Init {
         int startx = -100;
         int starty = 0;
         int startz = 20;
-        int maxdist = 65;
+        int maxdist = 120;
         int mindist = 35;
-        int maxy=80;
+        int maxy=70;
         int miny=10;
         int maxz=10;
         int minz=1;
