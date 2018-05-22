@@ -13,7 +13,7 @@ public class GravityThread implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            while(!jumping) {
+            while(!jumping && !dis.getPaused()) {
                 //System.out.println("Player Y:" + dis.getPlayerY());
                 //System.out.println("Current ground level: " + dis.getGround());
                 /*if (dis.getPlayerY()>dis.getGround()||dis.getPlayerY()<dis.getGround()) {

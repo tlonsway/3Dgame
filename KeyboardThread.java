@@ -12,28 +12,30 @@ public class KeyboardThread extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         //System.out.println("GOT KEY PRESS:" + key);
-        if (key == KeyEvent.VK_A) {
-            dis.aPress();
-        }
-        if (key == KeyEvent.VK_D) {
-            dis.dPress();
-        }
-        if (key == KeyEvent.VK_W) {
-            dis.wPress();
-        }
-        if (key == KeyEvent.VK_S) {
-            dis.sPress();
-        }
-        if (key == KeyEvent.VK_CONTROL) {
-            dis.shiftPress();
-        }    
-        if (key == KeyEvent.VK_SPACE) {
-            if (!jumping&&dis.getGround()>0) {
-                (new Thread(new JumpingThread(dis,gt,this))).start();
+        if (!dis.getPaused()) {
+            if (key == KeyEvent.VK_A) {
+                dis.aPress();
             }
-        }
-        if (key == KeyEvent.VK_R) {
-            dis.reset();
+            if (key == KeyEvent.VK_D) {
+                dis.dPress();
+            }
+            if (key == KeyEvent.VK_W) {
+                dis.wPress();
+            }
+            if (key == KeyEvent.VK_S) {
+                dis.sPress();
+            }
+            if (key == KeyEvent.VK_CONTROL) {
+                dis.shiftPress();
+            }    
+            if (key == KeyEvent.VK_SPACE) {
+                if (!jumping&&dis.getGround()>0) {
+                    (new Thread(new JumpingThread(dis,gt,this))).start();
+                }
+            }
+            if (key == KeyEvent.VK_R) {
+                dis.reset();
+            }
         }
         //dis.draw();
     }

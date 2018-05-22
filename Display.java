@@ -26,6 +26,9 @@ public class Display extends JComponent {
     double totalYDist = 0;
     int score = 0;
     double zt = 0;
+    boolean paused;
+    double lastGround = 0;
+    double dropy=0;
     public Display(ArrayList<ZObject> in) {
         objects = in;
         for (int i=0;i<100;i++) {
@@ -41,10 +44,15 @@ public class Display extends JComponent {
         playerz=0;
     }
     public void draw() {
+        //System.out.println(dropy);
+        if (dropy<-50) {
+            dropy=0;
+            reset();
+        }
         if (shift) 
-            mov = 2;
+            mov = 3;
         if (!shift)
-            mov = 1;
+            mov = 2;
         if (a) {
             this.move('x',mov);
         }
@@ -144,53 +152,56 @@ public class Display extends JComponent {
         objects=in;
     }  
     public void move(char dir, double dis) {
-        ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
-        double xdist = 0;
-        double ydist = 0;
-        double zdist = 0;
-        if (dir == 'x') {
-            xdist = dis;
-            playerx+=dis;
-        }
-        if (dir == 'y') {
-            //dis=((double)((int)(dis*1000)))/1000;
-            //System.out.println("YDist plus dis: " + (totalYDist+dis));
-            //System.out.println("Before YDist: " + totalYDist);
-            //System.out.println("Before dis: " + dis);
-            ydist = dis;
-            playery+=dis;
-            totalYDist+=dis;
-            //System.out.println("dis: " + dis);
-            //System.out.println("YDist: " + totalYDist);
-        }
-        if (dir == 'z') {
-            zdist = dis;
-            playerz+=dis;
-            zt+=dis;
-        }
-        for (ZObject zo : objects) {
-            if (zo.getType().equals("Polygon")) {
-                double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
-                double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
-                double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);
-                OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
-                OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
-                OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
-                tempzobj.add(new ZObject(dpone,dptwo,dpthree,zo.getColor()));                
-            } else if (zo.getType().equals("Quad")) {
-                double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
-                double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
-                double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);   
-                double[] freturned = manipulate.translate(zo.getFourList(), xdist, ydist, zdist);
-                OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
-                OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
-                OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
-                OtherPoint dpfour = new OtherPoint(freturned[0],freturned[1],freturned[2]);
-                tempzobj.add(new ZObject(dpone,dptwo,dpthree,dpfour,zo.getColor(),zo.isTouched()));
+        if (!paused) {
+            ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
+            double xdist = 0;
+            double ydist = 0;
+            double zdist = 0;
+            if (dir == 'x') {
+                xdist = dis;
+                playerx+=dis;
             }
+            if (dir == 'y') {
+                //dis=((double)((int)(dis*1000)))/1000;
+                //System.out.println("YDist plus dis: " + (totalYDist+dis));
+                //System.out.println("Before YDist: " + totalYDist);
+                //System.out.println("Before dis: " + dis);
+                ydist = dis;
+                playery+=dis;
+                totalYDist+=dis;
+                dropy+=dis;
+                //System.out.println("dis: " + dis);
+                //System.out.println("YDist: " + totalYDist);
+            }
+            if (dir == 'z') {
+                zdist = dis;
+                playerz+=dis;
+                zt+=dis;
+            }
+            for (ZObject zo : objects) {
+                if (zo.getType().equals("Polygon")) {
+                    double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
+                    double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
+                    double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);
+                    OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
+                    OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
+                    OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
+                    tempzobj.add(new ZObject(dpone,dptwo,dpthree,zo.getColor()));                
+                } else if (zo.getType().equals("Quad")) {
+                    double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
+                    double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
+                    double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);   
+                    double[] freturned = manipulate.translate(zo.getFourList(), xdist, ydist, zdist);
+                    OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
+                    OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
+                    OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
+                    OtherPoint dpfour = new OtherPoint(freturned[0],freturned[1],freturned[2]);
+                    tempzobj.add(new ZObject(dpone,dptwo,dpthree,dpfour,zo.getColor(),zo.isTouched()));
+                }
+            }
+            objects = tempzobj;
+            //draw();
         }
-        objects = tempzobj;
-        //draw();
     }   
     public double getPlayerX() {
         return playerx;
@@ -247,9 +258,13 @@ public class Display extends JComponent {
             //System.out.println(z.getBounds2D().toString());
             if (z.getBounds2D().intersects(player)) {
                 //System.out.println("found intersection");
+                if (z.getTop()>0) {
+                    dropy=0;
+                }
                 if (!z.isTouched()) {
                     score++;
                     z.touch();
+                    lastGround=z.getTop();
                 }
                 if (z.getTop()<highest) {
                     highest=z.getTop();
@@ -275,18 +290,23 @@ public class Display extends JComponent {
         objects.add(z);
     }
     public void reset() {
-        score=0;
-        //System.out.println("playerz: " + playerz);
-        objects=new ArrayList<ZObject>();
-        for(ZObject z : original) {
-            objects.add(z);
+        if (!paused) {
+            pause();
+            score=0;
+            objects=new ArrayList<ZObject>();
+            for(ZObject z : original) {
+                objects.add(z);
+            }
+            unpause();
         }
-        
-        //move('x',-playerx);
-        //move('y',-playery);
-        //move('z',-zt);
-        //for(ZObject z : objects) {
-        //    z.untouch();
-        //}
+    }
+    public void pause() {
+        paused=true;
+    }
+    public void unpause() {
+        paused=false;
+    }
+    public boolean getPaused() {
+        return paused;
     }
 }

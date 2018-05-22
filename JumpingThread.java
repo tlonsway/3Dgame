@@ -13,10 +13,10 @@ public class JumpingThread implements Runnable {
         //System.out.println("before jump player height: " + dis.getPlayerY());
         for(int i=0;i<70;i++) {
             if (i<30) {
-                dis.move('y',0.2);
+                dis.move('y',0.3);
                 //dis.setPlayerY(dis.getPlayerY()+0.2);
             } else {
-                dis.move('y',.1);
+                dis.move('y',.2);
                 //dis.setPlayerY(dis.getPlayerY()+0.1);
             }
             try {
