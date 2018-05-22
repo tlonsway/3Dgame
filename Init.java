@@ -32,7 +32,7 @@ public class Init {
         int minwidth=15;
         int maxlength=100;
         int minlength=20;
-        for(int i=0;i<200;i++) {
+        for(int i=0;i<150;i++) {
             int randx = (int)((Math.random()*((maxdist+1)-mindist))+mindist);
             int randy = (int)((Math.random()*((maxy+1)-miny))+miny);
             int randz = (int)((Math.random()*((maxz+1)-minz))+minz);

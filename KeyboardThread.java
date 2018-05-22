@@ -32,6 +32,9 @@ public class KeyboardThread extends KeyAdapter {
                 (new Thread(new JumpingThread(dis,gt,this))).start();
             }
         }
+        if (key == KeyEvent.VK_R) {
+            dis.reset();
+        }
         //dis.draw();
     }
     public void keyReleased(KeyEvent e) {

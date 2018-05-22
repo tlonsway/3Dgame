@@ -8,6 +8,7 @@ import java.awt.geom.Point2D.*;
 import java.awt.MultipleGradientPaint.CycleMethod;
 public class Display extends JComponent {
     ArrayList<ZObject> objects = new ArrayList<ZObject>();
+    ArrayList<ZObject> original = new ArrayList<ZObject>();
     ArrayList<Star> stars = new ArrayList<Star>();
     public static final int ASPECT = 1;
     public static final int FOV = 90;
@@ -24,12 +25,16 @@ public class Display extends JComponent {
     double mov = 1;
     double totalYDist = 0;
     int score = 0;
+    double zt = 0;
     public Display(ArrayList<ZObject> in) {
         objects = in;
         for (int i=0;i<100;i++) {
             int x = (int)(Math.random()*WIDTH);
             int y = (int)(Math.random()*HEIGHT);
             stars.add(new Star(x,y));
+        }
+        for(ZObject z : in) {
+            original.add(z);
         }
         playery=0;
         playerx=0;
@@ -148,7 +153,7 @@ public class Display extends JComponent {
             playerx+=dis;
         }
         if (dir == 'y') {
-            dis=((double)((int)(dis*1000)))/1000;
+            //dis=((double)((int)(dis*1000)))/1000;
             //System.out.println("YDist plus dis: " + (totalYDist+dis));
             //System.out.println("Before YDist: " + totalYDist);
             //System.out.println("Before dis: " + dis);
@@ -161,6 +166,7 @@ public class Display extends JComponent {
         if (dir == 'z') {
             zdist = dis;
             playerz+=dis;
+            zt+=dis;
         }
         for (ZObject zo : objects) {
             if (zo.getType().equals("Polygon")) {
@@ -201,9 +207,9 @@ public class Display extends JComponent {
     public void setPlayerY(double y) {
         playery=y;
     }
-    public void setPlayerZ(double z) {
-        playerz=z;
-    }
+    //public void setPlayerZ(double z) {
+    //    playerz=z;
+    //}
     public void aPress() {
         a=true;
     }
@@ -235,7 +241,7 @@ public class Display extends JComponent {
         shift=false;
     }
     public double getGround() {
-        double highest=-10000;
+        double highest=10000;
         BoundingBox player = new BoundingBox(-7,-7,7,7);
         for (ZObject z : objects) {
             //System.out.println(z.getBounds2D().toString());
@@ -245,7 +251,7 @@ public class Display extends JComponent {
                     score++;
                     z.touch();
                 }
-                if (z.getTop()>highest) {
+                if (z.getTop()<highest) {
                     highest=z.getTop();
                     //System.out.println("new highest");
                 }
@@ -267,5 +273,20 @@ public class Display extends JComponent {
     }
     public void addObject(ZObject z) {
         objects.add(z);
+    }
+    public void reset() {
+        score=0;
+        //System.out.println("playerz: " + playerz);
+        objects=new ArrayList<ZObject>();
+        for(ZObject z : original) {
+            objects.add(z);
+        }
+        
+        //move('x',-playerx);
+        //move('y',-playery);
+        //move('z',-zt);
+        //for(ZObject z : objects) {
+        //    z.untouch();
+        //}
     }
 }

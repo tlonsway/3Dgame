@@ -141,4 +141,7 @@ public class ZObject implements Comparable<ZObject> {
     public void touch() {
         touched=true;
     }
+    public void untouch() {
+        touched=false;
+    }
 }
