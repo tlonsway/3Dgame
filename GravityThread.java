@@ -10,7 +10,8 @@ public class GravityThread implements Runnable {
         jumping=jump;
     }
     public void run() {
-        while(true) {
+        boolean r = true;
+        while(r) {
             try {
                 //System.out.println("loop");
                 try {
@@ -40,6 +41,7 @@ public class GravityThread implements Runnable {
                 }  
             } catch (Exception e) {
                 try{
+                    r=false;
                     (new Thread(new GravityThread(dis,jumping))).start();
                     System.out.println("Gravity thread crashed but was restarted due to error: " + e);
                 }catch (Exception e2) {

@@ -9,6 +9,7 @@ import java.awt.MultipleGradientPaint.CycleMethod;
 public class Display extends JComponent {
     ArrayList<ZObject> objects = new ArrayList<ZObject>();
     ArrayList<ZObject> original = new ArrayList<ZObject>();
+    ArrayList<ZObject> playerbox = new ArrayList<ZObject>();
     ArrayList<Star> stars = new ArrayList<Star>();
     public static final int ASPECT = 1;
     public static final int FOV = 90;
@@ -42,6 +43,12 @@ public class Display extends JComponent {
         playery=0;
         playerx=0;
         playerz=0;
+        ZObject zone = new ZObject(new OtherPoint(-7,20,90), new OtherPoint(7,20,90), new OtherPoint(7,20,80), new OtherPoint(-7,20,80));
+        ZObject ztwo = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,80,80), new OtherPoint(7,80,80), new OtherPoint(7,20,80));
+        //ZObject zthree = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
+        //ZObject zfour = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
+        //ZObject zfive = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
+        //ZObject zsix = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
     }
     public void draw() {
         //System.out.println(dropy);
