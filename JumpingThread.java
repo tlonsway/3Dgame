@@ -12,8 +12,9 @@ public class JumpingThread implements Runnable {
             gr.jump();
             kt.jump();
             //System.out.println("before jump player height: " + dis.getPlayerY());
-            for(int i=0;i<70;i++) {
-                if (i<30) {
+            for(int i=0;i<90;i++) {
+                dis.spinPlayer(-((Math.PI*1)/90));
+                if (i<50) {
                     dis.move('y',0.3);
                     //dis.setPlayerY(dis.getPlayerY()+0.2);
                 } else {

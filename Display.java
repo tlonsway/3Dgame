@@ -44,11 +44,17 @@ public class Display extends JComponent {
         playerx=0;
         playerz=0;
         ZObject zone = new ZObject(new OtherPoint(-7,20,90), new OtherPoint(7,20,90), new OtherPoint(7,20,80), new OtherPoint(-7,20,80));
-        ZObject ztwo = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,80,80), new OtherPoint(7,80,80), new OtherPoint(7,20,80));
-        //ZObject zthree = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
-        //ZObject zfour = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
-        //ZObject zfive = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
-        //ZObject zsix = new ZObject(new OtherPoint(), new OtherPoint(), new OtherPoint(), new OtherPoint());
+        ZObject ztwo = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,10,80), new OtherPoint(7,10,80), new OtherPoint(7,20,80));
+        ZObject zthree = new ZObject(new OtherPoint(-7,10,80), new OtherPoint(-7,10,90), new OtherPoint(7,10,90), new OtherPoint(7,10,80));
+        ZObject zfour = new ZObject(new OtherPoint(-7,10,90), new OtherPoint(-7,20,90), new OtherPoint(7,20,90), new OtherPoint(7,10,90));
+        ZObject zfive = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,20,90), new OtherPoint(-7,10,90), new OtherPoint(-7,10,80));
+        ZObject zsix = new ZObject(new OtherPoint(7,20,80), new OtherPoint(7,20,90), new OtherPoint(7,10,90), new OtherPoint(7,10,80));
+        playerbox.add(zone);
+        playerbox.add(ztwo);
+        playerbox.add(zthree);
+        playerbox.add(zfour);
+        playerbox.add(zfive);
+        playerbox.add(zsix);
     }
     public void draw() {
         //System.out.println(dropy);
@@ -149,6 +155,20 @@ public class Display extends JComponent {
                 g2.draw(new java.awt.Polygon(xp,yp,4));
             }
         }
+        for(ZObject z : playerbox) {
+            if (z.getType().equals("Quad")) {
+                double[] oneproj = project.project2D(new double[]{z.getQuad().getOne().getX(),z.getQuad().getOne().getY(),z.getQuad().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                double[] twoproj = project.project2D(new double[]{z.getQuad().getTwo().getX(),z.getQuad().getTwo().getY(),z.getQuad().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                double[] threeproj = project.project2D(new double[]{z.getQuad().getThree().getX(),z.getQuad().getThree().getY(),z.getQuad().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);     
+                double[] fourproj = project.project2D(new double[]{z.getQuad().getFour().getX(),z.getQuad().getFour().getY(),z.getQuad().getFour().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
+                int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
+                int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
+                g.setColor(new Color(255,0,0,150));
+                g.fillPolygon(xp,yp,4);
+                g.setColor(new Color(255,0,0,255));
+                g.drawPolygon(xp,yp,4);
+            }
+        }        
         g.setColor(new Color(255,0,0,200));
         Font f = new Font("Courier New", Font.BOLD, 40);
         g.setFont(f);
@@ -213,6 +233,7 @@ public class Display extends JComponent {
                     tempzobj.add(new ZObject(dpone,dptwo,dpthree,dpfour,zo.getColor(),zo.isTouched()));
                 }
             }
+            
             objects = tempzobj;
             //draw();
         }
@@ -323,4 +344,27 @@ public class Display extends JComponent {
     public boolean getPaused() {
         return paused;
     }
+    public void spinPlayer(double deg) {
+        double ydist=deg;
+        double xdist=0;
+        double zdist=0;
+        ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
+        for(ZObject zo : playerbox) {
+            if (zo.getType().equals("Quad")) {
+                double[] oreturned = manipulate.rotate(new double[]{zo.getOne().getX(),zo.getOne().getY()-15,zo.getOne().getZ()-85,1}, 'x', deg);            
+                double[] twreturned = manipulate.rotate(new double[]{zo.getTwo().getX(),zo.getTwo().getY()-15,zo.getTwo().getZ()-85,1}, 'x', deg);
+                double[] trreturned = manipulate.rotate(new double[]{zo.getThree().getX(),zo.getThree().getY()-15,zo.getThree().getZ()-85,1}, 'x', deg);   
+                double[] freturned = manipulate.rotate(new double[]{zo.getFour().getX(),zo.getFour().getY()-15,zo.getFour().getZ()-85,1}, 'x', deg);
+                //double[] oreturned = manipulate.rotateAxis(zo.getOneList(), 
+                
+                
+                OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1]+15,oreturned[2]+85);
+                OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1]+15,twreturned[2]+85);
+                OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1]+15,trreturned[2]+85);
+                OtherPoint dpfour = new OtherPoint(freturned[0],freturned[1]+15,freturned[2]+85);
+                tempzobj.add(new ZObject(dpone,dptwo,dpthree,dpfour,zo.getColor(),zo.isTouched()));
+            }
+        }
+        playerbox=tempzobj;
+    }             
 }
