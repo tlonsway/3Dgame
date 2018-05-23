@@ -27,7 +27,7 @@ public class GravityThread implements Runnable {
                         //dis.setPlayerY((dis.getPlayerY()-.025));
                         //System.out.println("moving");
                     }*/
-                    if (dis.getGround()>20||dis.getGround()<-.1) {
+                    if (dis.getGround()>20||dis.getGround()<10/*-.1*/) {
                         dis.move('y',-.07);
                     }
                     /*if (dis.getCollision()==false) {

@@ -13,6 +13,11 @@ public class KeyboardThread extends KeyAdapter {
         int key = e.getKeyCode();
         //System.out.println("GOT KEY PRESS:" + key);
         if (!dis.getPaused()) {
+            if (key == KeyEvent.VK_SPACE) {
+                if (!jumping&&dis.getGround()>10&&dis.getGround()<24) {
+                    (new Thread(new JumpingThread(dis,gt,this))).start();
+                }
+            }            
             if (key == KeyEvent.VK_A) {
                 dis.aPress();
             }
@@ -28,11 +33,6 @@ public class KeyboardThread extends KeyAdapter {
             if (key == KeyEvent.VK_CONTROL) {
                 dis.shiftPress();
             }    
-            if (key == KeyEvent.VK_SPACE) {
-                if (!jumping&&dis.getGround()>0&&dis.getGround()<21) {
-                    (new Thread(new JumpingThread(dis,gt,this))).start();
-                }
-            }
             if (key == KeyEvent.VK_R) {
                 dis.reset();
             }

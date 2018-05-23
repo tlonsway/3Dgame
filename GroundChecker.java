@@ -6,7 +6,7 @@ public class GroundChecker implements Runnable {
     public void run() {
         while(true) {
             try {
-                if (dis.getGround()>0&&dis.getGround()<18) {
+                if (dis.getGround()>10&&dis.getGround()<19) {
                     //dis.move('y', 20-dis.getGround());
                     double dist = (20-dis.getGround())/100;
                     for(int i=0;i<100;i++) {

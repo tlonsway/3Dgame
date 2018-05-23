@@ -74,5 +74,6 @@ public class Init {
         (new Thread(new FrameThread(d))).start();
         frame.getContentPane().setBackground(Color.BLACK);
         (new Thread(new GroundChecker(d))).start();
+        (new Thread(new PlayerColorThread(d))).start();
     }
 }

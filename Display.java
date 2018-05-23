@@ -43,12 +43,12 @@ public class Display extends JComponent {
         playery=0;
         playerx=0;
         playerz=0;
-        ZObject zone = new ZObject(new OtherPoint(-7,20,90), new OtherPoint(7,20,90), new OtherPoint(7,20,80), new OtherPoint(-7,20,80));
-        ZObject ztwo = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,10,80), new OtherPoint(7,10,80), new OtherPoint(7,20,80));
-        ZObject zthree = new ZObject(new OtherPoint(-7,10,80), new OtherPoint(-7,10,90), new OtherPoint(7,10,90), new OtherPoint(7,10,80));
-        ZObject zfour = new ZObject(new OtherPoint(-7,10,90), new OtherPoint(-7,20,90), new OtherPoint(7,20,90), new OtherPoint(7,10,90));
-        ZObject zfive = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,20,90), new OtherPoint(-7,10,90), new OtherPoint(-7,10,80));
-        ZObject zsix = new ZObject(new OtherPoint(7,20,80), new OtherPoint(7,20,90), new OtherPoint(7,10,90), new OtherPoint(7,10,80));
+        ZObject zone = new ZObject(new OtherPoint(-7,20,90), new OtherPoint(7,20,90), new OtherPoint(7,20,80), new OtherPoint(-7,20,80),Color.RED);
+        ZObject ztwo = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,10,80), new OtherPoint(7,10,80), new OtherPoint(7,20,80),Color.RED);
+        ZObject zthree = new ZObject(new OtherPoint(-7,10,80), new OtherPoint(-7,10,90), new OtherPoint(7,10,90), new OtherPoint(7,10,80),Color.RED);
+        ZObject zfour = new ZObject(new OtherPoint(-7,10,90), new OtherPoint(-7,20,90), new OtherPoint(7,20,90), new OtherPoint(7,10,90),Color.RED);
+        ZObject zfive = new ZObject(new OtherPoint(-7,20,80), new OtherPoint(-7,20,90), new OtherPoint(-7,10,90), new OtherPoint(-7,10,80),Color.RED);
+        ZObject zsix = new ZObject(new OtherPoint(7,20,80), new OtherPoint(7,20,90), new OtherPoint(7,10,90), new OtherPoint(7,10,80),Color.RED);
         playerbox.add(zone);
         playerbox.add(ztwo);
         playerbox.add(zthree);
@@ -163,9 +163,9 @@ public class Display extends JComponent {
                 double[] fourproj = project.project2D(new double[]{z.getQuad().getFour().getX(),z.getQuad().getFour().getY(),z.getQuad().getFour().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
                 int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
                 int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
-                g.setColor(new Color(255,0,0,150));
+                g.setColor(new Color(z.getColor().getRed(),z.getColor().getGreen(),z.getColor().getBlue(),150));
                 g.fillPolygon(xp,yp,4);
-                g.setColor(new Color(255,0,0,255));
+                g.setColor(new Color(z.getColor().getRed(),z.getColor().getGreen(),z.getColor().getBlue(),255));
                 g.drawPolygon(xp,yp,4);
             }
         }        
@@ -173,13 +173,13 @@ public class Display extends JComponent {
         Font f = new Font("Courier New", Font.BOLD, 40);
         g.setFont(f);
         g.drawString("SCORE: " + score, 30, 50);
-        double[] oneproj = project.project2D(new double[]{-7,20,90,1},FOV,ASPECT,0.0,100.0);
+        /*double[] oneproj = project.project2D(new double[]{-7,20,90,1},FOV,ASPECT,0.0,100.0);
         double[] twoproj = project.project2D(new double[]{7,20,90,1},FOV,ASPECT,0.0,100.0);
         double[] threeproj = project.project2D(new double[]{7,20,80,1},FOV,ASPECT,5.0,100.0);     
         double[] fourproj = project.project2D(new double[]{-7,20,80,1},FOV,ASPECT,5.0,100.0);
         int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
         int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
-        g.drawPolygon(xp,yp,4);
+        g.drawPolygon(xp,yp,4);*/
         //draw();
     }
     public void update(ArrayList<ZObject> in) {
@@ -366,5 +366,10 @@ public class Display extends JComponent {
             }
         }
         playerbox=tempzobj;
-    }             
+    }      
+    public void changePlayerColor(Color c) {
+        for(ZObject z : playerbox) {
+            z.setColor(c);
+        }
+    }
 }
