@@ -53,6 +53,26 @@ public class Init {
         //frame.removeAll();
         frame.revalidate();
         frame.repaint();
+        LoadingScreen ls = new LoadingScreen();
+        frame.add(ls);
+        frame.repaint();
+        frame.revalidate();
+        
+        
+        for(int x=100;x<600;x++) {
+            ls.redraw(x);
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        frame.repaint();
+        frame.revalidate();
+        frame.remove(ls);
+        frame.repaint();
+        frame.revalidate();
+        
         samplein.add(one);
         int startx = -100;
         int starty = 0;
@@ -67,7 +87,7 @@ public class Init {
         int minwidth=15;
         int maxlength=100;
         int minlength=20;
-        for(int i=0;i<150;i++) {
+        for(int i=0;i<500;i++) {
             int randx = (int)((Math.random()*((maxdist+1)-mindist))+mindist);
             int randy = (int)((Math.random()*((maxy+1)-miny))+miny);
             int randz = (int)((Math.random()*((maxz+1)-minz))+minz);

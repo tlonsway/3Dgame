@@ -6,7 +6,7 @@ public class project {
         double bottom = -1*top;
         double right = top*aspect;
         double left = -1*right;
-        //Projection matrix calculation
+        //Projection matrix calculation 
         double[][] matrix = new double[][]{   {Math.atan((fov/2)),0,0,0},
                                               {0,Math.atan((fov)/2),0,0},
                                               {0,0,-((far+near)/(far-near)),-((2*(far*near))/(far-near))},
