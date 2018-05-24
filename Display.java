@@ -290,13 +290,11 @@ public class Display extends JComponent {
                 if (z.getTop()>0) {
                     dropy=0;
                 }
-                if (!z.isTouched()) {
+                if (!z.isTouched()&&z.getTop()<24) {
                     score++;
                     z.touch();
                     lastGround=z.getTop();
-                }
-                if (z.getTop()<24) {
-                    z.setColor(Color.GREEN);
+                    z.setColor(new Color(255-z.getColor().getRed(),255-z.getColor().getGreen(),255-z.getColor().getBlue(),255));                    
                 }
                 if (z.getTop()<highest) {
                     highest=z.getTop();

@@ -105,7 +105,9 @@ public class Init {
         d.draw();
         GravityThread gt = new GravityThread(d);
         (new Thread(gt)).start();
-        frame.addKeyListener(new KeyboardThread(d,gt));
+        KeyboardThread kt = new KeyboardThread(d,gt);
+        gt.setKeyboard(kt);
+        frame.addKeyListener(kt);
         (new Thread(new FrameThread(d))).start();
         frame.getContentPane().setBackground(Color.BLACK);
         (new Thread(new GroundChecker(d))).start();

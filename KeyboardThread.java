@@ -72,4 +72,7 @@ public class KeyboardThread extends KeyAdapter {
     public void unjump() {
         jumping=false;
     }  
+    public void changeGravityThread(GravityThread g) {
+        gt=g;
+    }
 }       

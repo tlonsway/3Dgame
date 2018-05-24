@@ -1,13 +1,15 @@
 public class GravityThread implements Runnable {
     Display dis;
     boolean jumping;
+    KeyboardThread kt;
     public GravityThread(Display d) {
         dis=d;
         jumping=false;
     }
-    public GravityThread(Display d, boolean jump) {
+    public GravityThread(Display d, boolean jump, KeyboardThread k) {
         dis=d;
         jumping=jump;
+        kt=k;
     }
     public void run() {
         boolean r = true;
@@ -42,7 +44,9 @@ public class GravityThread implements Runnable {
             } catch (Exception e) {
                 try{
                     r=false;
-                    (new Thread(new GravityThread(dis,jumping))).start();
+                    GravityThread gg = new GravityThread(dis,jumping,kt);
+                    kt.changeGravityThread(gg);
+                    (new Thread(gg)).start();
                     System.out.println("Gravity thread crashed but was restarted due to error: " + e);
                 }catch (Exception e2) {
                     System.out.println("Gravity threading dead - program will break");
@@ -55,5 +59,8 @@ public class GravityThread implements Runnable {
     }
     public void unjump() {
         jumping=false;
+    }
+    public void setKeyboard(KeyboardThread k) {
+        kt=k;
     }
 }
