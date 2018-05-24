@@ -62,7 +62,7 @@ public class Init {
         for(int x=100;x<600;x++) {
             ls.redraw(x);
             try {
-                Thread.sleep(10);
+                Thread.sleep(2);
             } catch (Exception e) {
                 e.printStackTrace();
             }
