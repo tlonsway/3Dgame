@@ -28,13 +28,13 @@ public class GravityThread implements Runnable {
                         //System.out.println("moving");
                     }*/
                     if (dis.getGround()>20||dis.getGround()<10/*-.1*/) {
-                        dis.move('y',-.07);
+                        dis.move('y',-.2);
                     }
                     /*if (dis.getCollision()==false) {
                         dis.move('y',-.025);
                     }*/
                     try {
-                        Thread.sleep(1);
+                        Thread.sleep(3);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

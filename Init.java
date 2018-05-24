@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.*;
 public class Init {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Game Window");
@@ -18,12 +20,45 @@ public class Init {
         //ZObject three = new ZObject(new OtherPoint(-120,20,500),new OtherPoint(-60,20,500), new OtherPoint(-60,20,-100), new OtherPoint(-120,20,-100));
         //ZObject four = new ZObject(new OtherPoint(-30,20,1450), new OtherPoint(30,20,1450), new OtherPoint(30,20,550), new OtherPoint(-30,20,550));
         ArrayList<ZObject> samplein = new ArrayList<ZObject>();
+        WelcomeScreen ws = new WelcomeScreen();
+        frame.add(ws);
+        for(float f=0.1f;f<1.0f;f+=.01f) {
+            ws.draw(f);
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for(float f=1.0f;f>0.1f;f-=.01f) {
+            ws.draw(f);
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }        
+
+        //ws.setVisible(true);
+
+        //ws.setVisible(false);
+        //frame.setVisible(true);
+        frame.remove(ws);
+        //frame.removeAll();
+        //frame.removeAll();
+        frame.revalidate();
+        frame.repaint();
         samplein.add(one);
         int startx = -100;
         int starty = 0;
         int startz = 20;
-        int maxdist = 120;
-        int mindist = 35;
+        int maxdist = 150;
+        int mindist = 90;
         int maxy=70;
         int miny=10;
         int maxz=10;
@@ -75,5 +110,7 @@ public class Init {
         frame.getContentPane().setBackground(Color.BLACK);
         (new Thread(new GroundChecker(d))).start();
         (new Thread(new PlayerColorThread(d))).start();
+        frame.revalidate();
+        frame.repaint();
     }
 }

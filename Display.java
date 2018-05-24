@@ -144,15 +144,17 @@ public class Display extends JComponent {
                 int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
                 int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
                 //g.setColor(z.getQuad().getColor());
-                Graphics2D g2=(Graphics2D)(g);
-                g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,new Color(255,255,255,200),WIDTH/2, 0,z.getQuad().getColor()));
-                //java.awt.Polygon p = new java.awt.Polygon();
-                //g.fillPolygon(xp,yp,4);
-                g2.fill(new java.awt.Polygon(xp,yp,4));
-                Color w2 = new Color(255,255,255,20);
-                Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),20);
-                g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,w2,WIDTH/2, 0,z2));
-                g2.draw(new java.awt.Polygon(xp,yp,4));
+                if (z.getZ()<1000) {
+                    Graphics2D g2=(Graphics2D)(g);
+                    g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,new Color(255,255,255,200),WIDTH/2, 0,z.getQuad().getColor()));
+                    //java.awt.Polygon p = new java.awt.Polygon();
+                    //g.fillPolygon(xp,yp,4);
+                    g2.fill(new java.awt.Polygon(xp,yp,4));
+                    Color w2 = new Color(255,255,255,20);
+                    Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),20);
+                    g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,w2,WIDTH/2, 0,z2));
+                    g2.draw(new java.awt.Polygon(xp,yp,4));
+                }
             }
         }
         for(ZObject z : playerbox) {
@@ -213,15 +215,7 @@ public class Display extends JComponent {
                 zt+=dis;
             }
             for (ZObject zo : objects) {
-                if (zo.getType().equals("Polygon")) {
-                    double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
-                    double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
-                    double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);
-                    OtherPoint dpone = new OtherPoint(oreturned[0],oreturned[1],oreturned[2]);
-                    OtherPoint dptwo = new OtherPoint(twreturned[0],twreturned[1],twreturned[2]);
-                    OtherPoint dpthree = new OtherPoint(trreturned[0],trreturned[1],trreturned[2]);
-                    tempzobj.add(new ZObject(dpone,dptwo,dpthree,zo.getColor()));                
-                } else if (zo.getType().equals("Quad")) {
+                if (zo.getType().equals("Quad")) {
                     double[] oreturned = manipulate.translate(zo.getOneList(), xdist, ydist, zdist);            
                     double[] twreturned = manipulate.translate(zo.getTwoList(), xdist, ydist, zdist);
                     double[] trreturned = manipulate.translate(zo.getThreeList(), xdist, ydist, zdist);   
@@ -301,6 +295,9 @@ public class Display extends JComponent {
                     z.touch();
                     lastGround=z.getTop();
                 }
+                if (z.getTop()<24) {
+                    z.setColor(Color.GREEN);
+                }
                 if (z.getTop()<highest) {
                     highest=z.getTop();
                     //System.out.println("new highest");
@@ -308,18 +305,6 @@ public class Display extends JComponent {
             }
         }
         return highest;
-    }
-    public boolean getCollision() {
-        boolean ret = false;
-        BoundingBox player = new BoundingBox(-3,3,-3,3,3,3);
-        for (ZObject z : objects) {
-            //System.out.println(z.getBounds3D().toString());
-            if (z.getBounds3D().intersects(player)) {
-                System.out.println("intersect");
-                return true;
-            }
-        }
-        return false;
     }
     public void addObject(ZObject z) {
         objects.add(z);
