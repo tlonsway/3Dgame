@@ -22,10 +22,10 @@ public class Init {
         ArrayList<ZObject> samplein = new ArrayList<ZObject>();
         WelcomeScreen ws = new WelcomeScreen();
         frame.add(ws);
-        for(float f=0.1f;f<1.0f;f+=.01f) {
+        for(float f=1.0f;f>0.2f;f-=.01f) {
             ws.draw(f);
             try {
-                Thread.sleep(10);
+                Thread.sleep(30);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -35,10 +35,10 @@ public class Init {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for(float f=1.0f;f>0.1f;f-=.01f) {
+        for(float f=.2f;f<1.0f;f+=.01f) {
             ws.draw(f);
             try {
-                Thread.sleep(10);
+                Thread.sleep(30);
             } catch (Exception e) {
                 e.printStackTrace();
             }
