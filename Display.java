@@ -63,7 +63,7 @@ public class Display extends JComponent {
             reset();
         }
         if (shift) 
-            mov = 4;
+            mov = 3.5;
         if (!shift)
             mov = 2;
         if (a) {
