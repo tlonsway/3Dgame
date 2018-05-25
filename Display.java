@@ -63,7 +63,7 @@ public class Display extends JComponent {
             reset();
         }
         if (shift) 
-            mov = 3;
+            mov = 4;
         if (!shift)
             mov = 2;
         if (a) {
@@ -73,10 +73,10 @@ public class Display extends JComponent {
             this.move('x', -mov);
         }
         if (w) {
-            this.move('z',-mov);
+            this.move('z',-mov*1.25);
         }
         if (s) {
-            this.move('z',mov);
+            this.move('z',mov*1.25);
         }
         playery=((double)((int)(playery*1000)))/1000;
         /*if (playery<.03&&playery!=0) {

@@ -36,7 +36,7 @@ public class GravityThread implements Runnable {
                         dis.move('y',-.025);
                     }*/
                     try {
-                        Thread.sleep(3);
+                        Thread.sleep(1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

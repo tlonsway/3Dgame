@@ -28,11 +28,11 @@ public class JumpingThread implements Runnable {
                 }
             }
             //System.out.println("after jump player height: " + dis.getPlayerY());
-            try {
+            /*try {
                 Thread.sleep(50);
             } catch (Exception e) {
                 e.printStackTrace();
-            }
+            }*/
             gr.unjump();
             //System.out.println("after jump waiting finished height: " + dis.getPlayerY());
             //System.out.println("finished jump");
