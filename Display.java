@@ -146,7 +146,7 @@ public class Display extends JComponent {
                     int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
                     //g.setColor(z.getQuad().getColor());
                     Graphics2D g2=(Graphics2D)(g);
-                    g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,new Color(255,255,255,200),WIDTH/2, 0,z.getQuad().getColor()));
+                    g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,new Color(255,255,255,200),WIDTH/2, HEIGHT/2,z.getQuad().getColor()));
                     //java.awt.Polygon p = new java.awt.Polygon();
                     //g.fillPolygon(xp,yp,4);
                     g2.fill(new java.awt.Polygon(xp,yp,4));
