@@ -95,6 +95,7 @@ public class Init {
             int randlength = (int)((Math.random()*((maxlength+1)-minlength)+minlength));
             int randys = (int)(Math.random()*2);
             int randzs = (int)(Math.random()*2);
+            System.out.println("MapGen[n:" + i + " randx:" + randx + " randy:" + randy + " randz: " + randz + " randwidth:" + randwidth + " randlength:" + randlength + " ys:" + randys + " zs:" + randzs + " startx:" + startx + " starty:" + starty + " startz:" + startz + "]");
             OtherPoint p1 = null;
             OtherPoint p2 = null;
             OtherPoint p3 = null;
