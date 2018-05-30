@@ -70,9 +70,16 @@ public class Init {
         frame.repaint();
         frame.revalidate();
         frame.remove(ls);
+        SettingsMenu sm = new SettingsMenu();
+        frame.add(sm);
         frame.repaint();
         frame.revalidate();
-        
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        frame.remove(sm);
         samplein.add(one);
         int startx = -100;
         int starty = 0;
