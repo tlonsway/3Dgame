@@ -75,12 +75,16 @@ public class Init {
         frame.repaint();
         frame.revalidate();
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace();
         }
         frame.remove(sm);
         samplein.add(one);
+        frame.setFocusable(true);
+        //frame.removeAll();
+        sm.disable();
+        frame.setVisible(true);
         int startx = -100;
         int starty = 0;
         int startz = 20;

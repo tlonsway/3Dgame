@@ -1,25 +1,33 @@
 import java.awt.*;
 import javax.swing.*;
 public class SettingsMenu extends JPanel {
+    boolean dis = false;
+    JTextField speed = new JTextField();
     public SettingsMenu() {
         super();
-        
-        
+        //speed.setVisible(true);
+        //speed.setEditable(true);
+        this.add(speed);
     }
     public void redraw() {
-        
+        repaint();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g.setColor(Color.BLACK);
         g.fillRect(0,0,800,800);
-        int TESTMIN=0;
-        int TESTMAX=100;
-        int TESTINIT=50;
-        JSlider test = new JSlider(JSlider.HORIZONTAL,TESTMIN,TESTMAX,TESTINIT);
-        test.setMajorTickSpacing(10);
-        test.setPaintTicks(true);
-        test.setPaintLabels(true);
+        g.setColor(Color.RED);
+        Font f = new Font("Courier New", Font.BOLD, 80);
+        g.setFont(f);
+        g.drawString("SETTINGS", 50, 300);
+        speed.setBounds(150,400,80,30);
+        Font f2 = new Font("Courier New", Font.BOLD,20);
+        g.setFont(f2);
+        //g.drawString("TOTAL BLOCKS",);
+    }
+    public void disable() {
+        this.remove(speed);
+        this.removeAll();
     }
 }
