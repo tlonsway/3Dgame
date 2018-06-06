@@ -3,6 +3,7 @@ import javax.swing.*;
 public class SettingsMenu extends JComponent {
     boolean dis = false;
     JTextField speed = new JTextField();
+    boolean complete = false;
     public SettingsMenu() {
         super();
         //speed.setVisible(true);
@@ -18,13 +19,16 @@ public class SettingsMenu extends JComponent {
         //g.setColor(Color.BLACK);
         //g.fillRect(0, 0, 800, 800);
         g.setColor(Color.RED);
-        Font f = new Font("Courier New", Font.BOLD, 80);
+        Font f = new Font("Courier New", Font.BOLD, 100);
         g.setFont(f);
-        g.drawString("SETTINGS", 50, 300);
+        g.drawString("SETTINGS", 30, 100);
         //speed.setBounds(150,400,80,30);
-        Font f2 = new Font("Courier New", Font.BOLD,20);
+        Font f2 = new Font("Courier New", Font.BOLD,50);
         g.setFont(f2);
         //g.drawString("TOTAL BLOCKS",);
+        g.drawString("SPEED",110,330);
+        g.drawString("FPS",170,480);
+        g.drawString("BLOCKS",80,630);
     }
     public void disable() {
         //speed.setEditable(false);
@@ -32,5 +36,11 @@ public class SettingsMenu extends JComponent {
         ////speed.setFocusable(false);
         //this.remove(speed);
         //this.removeAll();
+    }
+    public void setComplete() {
+        complete=true;
+    }
+    public boolean getComplete() {
+        return complete;
     }
 }

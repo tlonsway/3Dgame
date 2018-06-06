@@ -23,14 +23,17 @@ public class Display extends JComponent {
     boolean w;
     boolean s;
     boolean shift;
-    double mov = 1;
+    double movespeed;
     double totalYDist = 0;
     int score = 0;
     double zt = 0;
     boolean paused;
     double lastGround = 0;
     double dropy=0;
-    public Display(ArrayList<ZObject> in) {
+    double greatestZ;
+    boolean gameover = false;
+    int highscore = 0;
+    public Display(ArrayList<ZObject> in, double mvspeed, double farthest) {
         objects = in;
         for (int i=0;i<100;i++) {
             int x = (int)(Math.random()*WIDTH);
@@ -55,17 +58,28 @@ public class Display extends JComponent {
         playerbox.add(zfour);
         playerbox.add(zfive);
         playerbox.add(zsix);
+        movespeed=mvspeed;
+        greatestZ=farthest;
     }
     public void draw() {
         //System.out.println(dropy);
+        if (score>highscore) {
+            highscore=score;
+        }
+        System.out.println(playerz);
+        //System.out.println(greatestZ);
+        if(-1*playerz>greatestZ) {
+            gameover=true;
+        }
+        double mov=0;
         if (dropy<-50) {
             dropy=0;
             reset();
         }
         if (shift) 
-            mov = 3.5;
+            mov = movespeed+1.5;
         if (!shift)
-            mov = 2;
+            mov = movespeed;
         if (a) {
             this.move('x',mov);
         }
@@ -91,98 +105,109 @@ public class Display extends JComponent {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(new Color(255,255,255,180));
-        for (int i=stars.size()-1;i>-1;i--) {
-            Star s = stars.get(i);
-            if (s.getX()<0||s.getY()<0||s.getX()>WIDTH||s.getY()>HEIGHT) {
-                stars.remove(i);
-                int x = (int)(Math.random()*WIDTH);
-                int y = (int)(Math.random()*HEIGHT);
-                stars.add(new Star(x,y));
-                continue;
-            } 
-            if (s.getX()<WIDTH/2) {
-                s.setX(s.getX()-1);
+        if (!gameover) {
+            g.setColor(new Color(255,255,255,180));
+            for (int i=stars.size()-1;i>-1;i--) {
+                Star s = stars.get(i);
+                if (s.getX()<0||s.getY()<0||s.getX()>WIDTH||s.getY()>HEIGHT) {
+                    stars.remove(i);
+                    int x = (int)(Math.random()*WIDTH);
+                    int y = (int)(Math.random()*HEIGHT);
+                    stars.add(new Star(x,y));
+                    continue;
+                } 
+                if (s.getX()<WIDTH/2) {
+                    s.setX(s.getX()-1);
+                }
+                if (s.getX()>WIDTH/2) {
+                    s.setX(s.getX()+1);
+                }
+                if (s.getY()<HEIGHT/2) {
+                    s.setY(s.getY()-1);
+                }
+                if (s.getY()>HEIGHT/2) {
+                    s.setY(s.getY()+1);
+                } 
+                /*java.awt.geom.Point2D center = new java.awt.geom.Point2D.Float(s.getX(), s.getX());
+                float radius = 10;
+                java.awt.geom.Point2D focus = new java.awt.geom.Point2D.Float(s.getX()-10, s.getY()-10);
+                float[] dist = {0.0f, 0.5f, 1.0f};
+                Color[] colors = {new Color(255,255,255,255), new Color(255,255,255,180), new Color(255,255,255,100)};
+                RadialGradientPaint p =
+                new RadialGradientPaint(center, radius, focus,
+                                     dist, colors,
+                                     CycleMethod.NO_CYCLE);
+                Graphics2D g2D = (Graphics2D)g; 
+                g2D.setPaint(p);
+                g2D.fillRect(s.getX(),s.getY(),5,5);*/
+                g.fillRect(s.getX(),s.getY(),2,2);
             }
-            if (s.getX()>WIDTH/2) {
-                s.setX(s.getX()+1);
+            for(ZObject z : objects) {
+                if (z.getZ()<1000&&z.getZ()>-250) {
+                    if (z.getType().equals("Polygon")) {
+                        double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                        double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                        double[] threeproj = project.project2D(new double[]{z.getPolygon().getThree().getX(),z.getPolygon().getThree().getY(),z.getPolygon().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
+                        int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0])};
+                        int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
+                        g.setColor(z.getPolygon().getColor());
+                        g.fillPolygon(xp,yp,3);
+                    } else if (z.getType().equals("Quad")) {
+                        double[] oneproj = project.project2D(new double[]{z.getQuad().getOne().getX(),z.getQuad().getOne().getY(),z.getQuad().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                        double[] twoproj = project.project2D(new double[]{z.getQuad().getTwo().getX(),z.getQuad().getTwo().getY(),z.getQuad().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
+                        double[] threeproj = project.project2D(new double[]{z.getQuad().getThree().getX(),z.getQuad().getThree().getY(),z.getQuad().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);     
+                        double[] fourproj = project.project2D(new double[]{z.getQuad().getFour().getX(),z.getQuad().getFour().getY(),z.getQuad().getFour().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
+                        int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
+                        int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
+                        //g.setColor(z.getQuad().getColor());
+                        Graphics2D g2=(Graphics2D)(g);
+                        g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,new Color(255,255,255,200),WIDTH/2, HEIGHT/2,z.getQuad().getColor()));
+                        //java.awt.Polygon p = new java.awt.Polygon();
+                        //g.fillPolygon(xp,yp,4);
+                        g2.fill(new java.awt.Polygon(xp,yp,4));
+                        Color w2 = new Color(255,255,255,20);
+                        Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),20);
+                        g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,w2,WIDTH/2, 0,z2));
+                        g2.draw(new java.awt.Polygon(xp,yp,4));
+                    }
+                }
             }
-            if (s.getY()<HEIGHT/2) {
-                s.setY(s.getY()-1);
-            }
-            if (s.getY()>HEIGHT/2) {
-                s.setY(s.getY()+1);
-            } 
-            /*java.awt.geom.Point2D center = new java.awt.geom.Point2D.Float(s.getX(), s.getX());
-            float radius = 10;
-            java.awt.geom.Point2D focus = new java.awt.geom.Point2D.Float(s.getX()-10, s.getY()-10);
-            float[] dist = {0.0f, 0.5f, 1.0f};
-            Color[] colors = {new Color(255,255,255,255), new Color(255,255,255,180), new Color(255,255,255,100)};
-            RadialGradientPaint p =
-            new RadialGradientPaint(center, radius, focus,
-                                 dist, colors,
-                                 CycleMethod.NO_CYCLE);
-            Graphics2D g2D = (Graphics2D)g; 
-            g2D.setPaint(p);
-            g2D.fillRect(s.getX(),s.getY(),5,5);*/
-            g.fillRect(s.getX(),s.getY(),2,2);
-        }
-        for(ZObject z : objects) {
-            if (z.getZ()<1000&&z.getZ()>-250) {
-                if (z.getType().equals("Polygon")) {
-                    double[] oneproj = project.project2D(new double[]{z.getPolygon().getOne().getX(),z.getPolygon().getOne().getY(),z.getPolygon().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
-                    double[] twoproj = project.project2D(new double[]{z.getPolygon().getTwo().getX(),z.getPolygon().getTwo().getY(),z.getPolygon().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
-                    double[] threeproj = project.project2D(new double[]{z.getPolygon().getThree().getX(),z.getPolygon().getThree().getY(),z.getPolygon().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
-                    int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0])};
-                    int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1])};
-                    g.setColor(z.getPolygon().getColor());
-                    g.fillPolygon(xp,yp,3);
-                } else if (z.getType().equals("Quad")) {
+            for(ZObject z : playerbox) {
+                if (z.getType().equals("Quad")) {
                     double[] oneproj = project.project2D(new double[]{z.getQuad().getOne().getX(),z.getQuad().getOne().getY(),z.getQuad().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
                     double[] twoproj = project.project2D(new double[]{z.getQuad().getTwo().getX(),z.getQuad().getTwo().getY(),z.getQuad().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
                     double[] threeproj = project.project2D(new double[]{z.getQuad().getThree().getX(),z.getQuad().getThree().getY(),z.getQuad().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);     
                     double[] fourproj = project.project2D(new double[]{z.getQuad().getFour().getX(),z.getQuad().getFour().getY(),z.getQuad().getFour().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
                     int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
                     int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
-                    //g.setColor(z.getQuad().getColor());
-                    Graphics2D g2=(Graphics2D)(g);
-                    g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,new Color(255,255,255,200),WIDTH/2, HEIGHT/2,z.getQuad().getColor()));
-                    //java.awt.Polygon p = new java.awt.Polygon();
-                    //g.fillPolygon(xp,yp,4);
-                    g2.fill(new java.awt.Polygon(xp,yp,4));
-                    Color w2 = new Color(255,255,255,20);
-                    Color z2 = new Color(z.getQuad().getColor().getRed(),z.getQuad().getColor().getGreen(),z.getQuad().getColor().getBlue(),20);
-                    g2.setPaint(new GradientPaint(WIDTH/2,HEIGHT,w2,WIDTH/2, 0,z2));
-                    g2.draw(new java.awt.Polygon(xp,yp,4));
+                    g.setColor(new Color(z.getColor().getRed(),z.getColor().getGreen(),z.getColor().getBlue(),150));
+                    g.fillPolygon(xp,yp,4);
+                    g.setColor(new Color(z.getColor().getRed(),z.getColor().getGreen(),z.getColor().getBlue(),255));
+                    g.drawPolygon(xp,yp,4);
                 }
-            }
+            }        
+            g.setColor(new Color(255,0,0,200));
+            Font f = new Font("Courier New", Font.BOLD, 40);
+            g.setFont(f);
+            g.drawString("SCORE: " + score, 30, 50);
+            g.drawString("HIGH SCORE: " + highscore,30,700);
+            /*double[] oneproj = project.project2D(new double[]{-7,20,90,1},FOV,ASPECT,0.0,100.0);
+            double[] twoproj = project.project2D(new double[]{7,20,90,1},FOV,ASPECT,0.0,100.0);
+            double[] threeproj = project.project2D(new double[]{7,20,80,1},FOV,ASPECT,5.0,100.0);     
+            double[] fourproj = project.project2D(new double[]{-7,20,80,1},FOV,ASPECT,5.0,100.0);
+            int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
+            int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
+            g.drawPolygon(xp,yp,4);*/
+            //draw();
+        } else {
+            g.setColor(Color.GREEN);
+            g.fillRect(0,0,800,800);
+            g.setColor(Color.BLACK);
+            Font f = new Font("Courier New", Font.BOLD, 130);
+            g.setFont(f);
+            g.drawString("YOU WIN!",80,350);
+            pause();
         }
-        for(ZObject z : playerbox) {
-            if (z.getType().equals("Quad")) {
-                double[] oneproj = project.project2D(new double[]{z.getQuad().getOne().getX(),z.getQuad().getOne().getY(),z.getQuad().getOne().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
-                double[] twoproj = project.project2D(new double[]{z.getQuad().getTwo().getX(),z.getQuad().getTwo().getY(),z.getQuad().getTwo().getSpecialZ(),1},FOV,ASPECT,0.0,100.0);
-                double[] threeproj = project.project2D(new double[]{z.getQuad().getThree().getX(),z.getQuad().getThree().getY(),z.getQuad().getThree().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);     
-                double[] fourproj = project.project2D(new double[]{z.getQuad().getFour().getX(),z.getQuad().getFour().getY(),z.getQuad().getFour().getSpecialZ(),1},FOV,ASPECT,5.0,100.0);
-                int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
-                int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
-                g.setColor(new Color(z.getColor().getRed(),z.getColor().getGreen(),z.getColor().getBlue(),150));
-                g.fillPolygon(xp,yp,4);
-                g.setColor(new Color(z.getColor().getRed(),z.getColor().getGreen(),z.getColor().getBlue(),255));
-                g.drawPolygon(xp,yp,4);
-            }
-        }        
-        g.setColor(new Color(255,0,0,200));
-        Font f = new Font("Courier New", Font.BOLD, 40);
-        g.setFont(f);
-        g.drawString("SCORE: " + score, 30, 50);
-        /*double[] oneproj = project.project2D(new double[]{-7,20,90,1},FOV,ASPECT,0.0,100.0);
-        double[] twoproj = project.project2D(new double[]{7,20,90,1},FOV,ASPECT,0.0,100.0);
-        double[] threeproj = project.project2D(new double[]{7,20,80,1},FOV,ASPECT,5.0,100.0);     
-        double[] fourproj = project.project2D(new double[]{-7,20,80,1},FOV,ASPECT,5.0,100.0);
-        int[] xp = new int[]{(int)(WIDTH*oneproj[0]),(int)(WIDTH*twoproj[0]),(int)(WIDTH*threeproj[0]),(int)(WIDTH*fourproj[0])};
-        int[] yp = new int[]{(int)(HEIGHT*oneproj[1]),(int)(HEIGHT*twoproj[1]),(int)(HEIGHT*threeproj[1]),(int)(HEIGHT*fourproj[1])};
-        g.drawPolygon(xp,yp,4);*/
-        //draw();
     }
     public void update(ArrayList<ZObject> in) {
         objects=in;
@@ -310,6 +335,7 @@ public class Display extends JComponent {
     public void reset() {
         if (!paused) {
             pause();
+            playerz=0;
             score=0;
             objects=new ArrayList<ZObject>();
             for(ZObject z : original) {

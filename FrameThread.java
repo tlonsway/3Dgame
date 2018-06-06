@@ -4,6 +4,10 @@ public class FrameThread implements Runnable {
     public FrameThread(Display d) {
         dis=d;
     }
+    public FrameThread(Display d, int framespersecond) {
+        dis=d;
+        fps=framespersecond;
+    }
     public void run() {
         while(true) {
             if (!dis.getPaused()) {

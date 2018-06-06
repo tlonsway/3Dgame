@@ -74,21 +74,78 @@ public class Init {
         frame.repaint();
         frame.revalidate();
         JTextField speed = new JTextField();
-        speed.setBounds(150,400,80,30);
-        speed.setVisible(true);
+        speed.setBounds(275,300,80,30);
+        JTextField fps = new JTextField();
+        fps.setBounds(275, 450, 80, 30);
+        JTextField blocks = new JTextField();
+        blocks.setBounds(275,600,80,30);
+        //fps.setVisible(true);
+        //speed.setVisible(true);
+        frame.add(fps);
         frame.add(speed);
-        //frame.repaint();
+        frame.add(blocks);
+        frame.repaint();
+        fps.setText("60");
+        speed.setText("2");
+        blocks.setText("50");
         //frame.revalidate();
-        try {
+        /*try {
             Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace();
+        }*/
+        JButton enter = new JButton("START");
+        enter.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    sm.setComplete();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        enter.setBounds(500,450,100,100);
+        frame.add(enter);
+        frame.repaint();
+        while(!sm.getComplete()) {
+            try {
+                Thread.sleep(1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        double speedn = 2;
+        double fpsn = 60;
+        double blocksn = 50;
+        try { 
+            speedn = Double.parseDouble(speed.getText());
+        } catch (Exception e) {
+            System.out.print("bad data input for speed");
+        }
+        try {
+            fpsn = Double.parseDouble(fps.getText());
+        } catch (Exception e) {
+            System.out.println("bad data input for fps");
+        }
+        try {
+            blocksn = Double.parseDouble(blocks.getText());
+        } catch (Exception e) {
+            System.out.println("bad data input for blocks");
+        }
+        sm.setVisible(false);
         frame.remove(sm);
         speed.setVisible(false);
+        fps.setVisible(false);
+        blocks.setVisible(false);
+        enter.setVisible(false);
         frame.remove(speed);
+        frame.remove(fps);
+        frame.remove(blocks);
+        frame.remove(enter);
         frame.setVisible(false);
         frame.setVisible(true);
+        frame.repaint();
+        frame.revalidate();
         int startx = -100;
         int starty = 0;
         int startz = 20;
@@ -102,7 +159,8 @@ public class Init {
         int minwidth=15;
         int maxlength=100;
         int minlength=20;
-        for(int i=0;i<500;i++) {
+        double farthest=0;
+        for(int i=0;i<blocksn;i++) {
             int randx = (int)((Math.random()*((maxdist+1)-mindist))+mindist);
             int randy = (int)((Math.random()*((maxy+1)-miny))+miny);
             int randz = (int)((Math.random()*((maxz+1)-minz))+minz);
@@ -110,6 +168,9 @@ public class Init {
             int randlength = (int)((Math.random()*((maxlength+1)-minlength)+minlength));
             int randys = (int)(Math.random()*2);
             int randzs = (int)(Math.random()*2);
+            if(i+1==blocksn) {
+                farthest=startx+(randx/2);
+            }
             System.out.println("MapGen[n:" + i + " randx:" + randx + " randy:" + randy + " randz: " + randz + " randwidth:" + randwidth + " randlength:" + randlength + " ys:" + randys + " zs:" + randzs + " startx:" + startx + " starty:" + starty + " startz:" + startz + "]");
             OtherPoint p1 = null;
             OtherPoint p2 = null;
@@ -130,12 +191,13 @@ public class Init {
             startx+=randx+randlength;
             starty+=randy;
             startz+=randz;
+            
         }
         //samplein.add(one);
         //samplein.add(two);
         //samplein.add(three);
         //samplein.add(four);
-        Display d = new Display(samplein);
+        Display d = new Display(samplein,speedn,farthest);
         frame.add(d);
         d.setVisible(true);
         d.draw();
@@ -144,7 +206,7 @@ public class Init {
         KeyboardThread kt = new KeyboardThread(d,gt);
         gt.setKeyboard(kt);
         frame.addKeyListener(kt);
-        (new Thread(new FrameThread(d))).start();
+        (new Thread(new FrameThread(d,(int)fpsn))).start();
         frame.getContentPane().setBackground(Color.BLACK);
         (new Thread(new GroundChecker(d))).start();
         (new Thread(new PlayerColorThread(d))).start();
