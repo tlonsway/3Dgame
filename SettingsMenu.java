@@ -1,6 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
-public class SettingsMenu extends JPanel {
+public class SettingsMenu extends JComponent {
     boolean dis = false;
     JTextField speed = new JTextField();
     public SettingsMenu() {

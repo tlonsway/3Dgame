@@ -68,7 +68,7 @@ public class Init {
         frame.repaint();
         frame.revalidate();
         frame.remove(ls);
-        //frame.getContentPane().setBackground(Color.BLACK);
+        frame.getContentPane().setBackground(Color.BLACK);
         SettingsMenu sm = new SettingsMenu();
         frame.add(sm);
         frame.repaint();
@@ -85,6 +85,10 @@ public class Init {
             e.printStackTrace();
         }
         frame.remove(sm);
+        speed.setVisible(false);
+        frame.remove(speed);
+        frame.setVisible(false);
+        frame.setVisible(true);
         int startx = -100;
         int starty = 0;
         int startz = 20;
