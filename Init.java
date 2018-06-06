@@ -8,6 +8,7 @@ import javax.imageio.*;
 public class Init {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Game Window");
+        //frame.setAlwaysOnTop(true);
         frame.setVisible(true);
         frame.setSize(800,800);
         frame.setResizable(false);
@@ -20,6 +21,7 @@ public class Init {
         //ZObject three = new ZObject(new OtherPoint(-120,20,500),new OtherPoint(-60,20,500), new OtherPoint(-60,20,-100), new OtherPoint(-120,20,-100));
         //ZObject four = new ZObject(new OtherPoint(-30,20,1450), new OtherPoint(30,20,1450), new OtherPoint(30,20,550), new OtherPoint(-30,20,550));
         ArrayList<ZObject> samplein = new ArrayList<ZObject>();
+        samplein.add(one);
         WelcomeScreen ws = new WelcomeScreen();
         frame.add(ws);
         for(float f=1.0f;f>0.2f;f-=.01f) {
@@ -43,9 +45,7 @@ public class Init {
                 e.printStackTrace();
             }
         }        
-
         //ws.setVisible(true);
-
         //ws.setVisible(false);
         //frame.setVisible(true);
         frame.remove(ws);
@@ -57,8 +57,6 @@ public class Init {
         frame.add(ls);
         frame.repaint();
         frame.revalidate();
-        
-        
         for(int x=100;x<600;x++) {
             ls.redraw(x);
             try {
@@ -70,21 +68,23 @@ public class Init {
         frame.repaint();
         frame.revalidate();
         frame.remove(ls);
+        //frame.getContentPane().setBackground(Color.BLACK);
         SettingsMenu sm = new SettingsMenu();
         frame.add(sm);
         frame.repaint();
         frame.revalidate();
+        JTextField speed = new JTextField();
+        speed.setBounds(150,400,80,30);
+        speed.setVisible(true);
+        frame.add(speed);
+        //frame.repaint();
+        //frame.revalidate();
         try {
             Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace();
         }
         frame.remove(sm);
-        samplein.add(one);
-        frame.setFocusable(true);
-        //frame.removeAll();
-        sm.disable();
-        frame.setVisible(true);
         int startx = -100;
         int starty = 0;
         int startz = 20;
