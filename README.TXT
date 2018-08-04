@@ -1,4 +1,12 @@
-Tristan Lonsway - 3D game
+Tristan Lonsway - 3D game(plane glider)
 
-Description: This project was created based on the 3d engine that I previously built, this game implements basic functional physics, and has several differing features from the original engine.
+Description: This project was created based on the 3d engine that I previously built, this game implements basic collision and gravity physics, and has several differing features from the original engine. The game is a simple run and jump game, where the player glides across colorful shapes towards a set end, with maps being randomly generated with a degree of complexity and possibility added. The FPS, speed, and total blocks can all be modified at the beginning of the game.
+
+I made this as my final project for AP computer science, a course where we learned the basics of coding and the complex functions of java. This game gathers and summarizes the knowledge I gained from that class, along with my deep interest for the complicated workings of 3D graphics rendering. Programming this project challenged me in many ways, from figuring out collision physics, to making an efficient realtime simple rendering engine(using the CPU), to putting the player in third person. The end result contains some, but a safe amount of bugs for the game to be playable. The main bugs I know of are FPS being linked directly to the game "tick" speed, and the game finishing when the player is close, but not completely at the end of the map. I might eventually fix these bugs, but the project currently exists as its finished state as of the project due date. 
+
+The original graphics engine is under a different project on my github, called 3Dmovement. This project was more of a test area for my study in 3D rendering, and the mathematics behind it. The idea of realistic perspective being mathematically calculated with ease seemed very interesting, so testing it out and producing a result was very enjoyable. The graphics engine is poorly optimized, and will only run on the CPU(as I do not know any CUDA programming yet), so it is highly limited in capability. The engine can import OBJ files(most of the time), and can render in different colors(though this cannot be imported). I have yet to add texturing, but I plan on eventually adding it. Mainly the engine uses basic transformation and projection matrices, allowing for movement of the "player", and perspective rendering on the screen. 
+
+If you are interested, a final compiled java release is available under the releases section of the project, along with other previous versions of the project in production.
+
 Date started: 5/19/18
+Date completed: 6/5/18
