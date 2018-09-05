@@ -171,7 +171,7 @@ public class Init {
             if(i+1==blocksn) {
                 farthest=startx+(randx/2);
             }
-            System.out.println("MapGen[n:" + i + " randx:" + randx + " randy:" + randy + " randz: " + randz + " randwidth:" + randwidth + " randlength:" + randlength + " ys:" + randys + " zs:" + randzs + " startx:" + startx + " starty:" + starty + " startz:" + startz + "]");
+            //System.out.println("MapGen[n:" + i + " randx:" + randx + " randy:" + randy + " randz: " + randz + " randwidth:" + randwidth + " randlength:" + randlength + " ys:" + randys + " zs:" + randzs + " startx:" + startx + " starty:" + starty + " startz:" + startz + "]");
             OtherPoint p1 = null;
             OtherPoint p2 = null;
             OtherPoint p3 = null;
@@ -207,6 +207,7 @@ public class Init {
         gt.setKeyboard(kt);
         frame.addKeyListener(kt);
         (new Thread(new FrameThread(d,(int)fpsn))).start();
+        (new Thread(new UpdateThread(d))).start();
         frame.getContentPane().setBackground(Color.BLACK);
         (new Thread(new GroundChecker(d))).start();
         (new Thread(new PlayerColorThread(d))).start();

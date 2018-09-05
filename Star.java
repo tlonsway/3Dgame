@@ -1,20 +1,20 @@
 public class Star {
-    int x;
-    int y;
-    public Star(int xx, int yy) {
+    double x;
+    double y;
+    public Star(double xx, double yy) {
         x=xx;
         y=yy;
     }
-    public int getX() {
+    public double getX() {
         return x;
     }
-    public int getY() {
+    public double getY() {
         return y;
     }
-    public void setX(int xx) {
+    public void setX(double xx) {
         x=xx;
     }
-    public void setY(int yy) {
+    public void setY(double yy) {
         y=yy;
     }
 }

@@ -61,12 +61,15 @@ public class Display extends JComponent {
         movespeed=mvspeed;
         greatestZ=farthest;
     }
+    public void frame() {
+        this.repaint();
+    }
     public void draw() {
         //System.out.println(dropy);
         if (score>highscore) {
             highscore=score;
         }
-        System.out.println(playerz);
+        //System.out.println(playerz);
         //System.out.println(greatestZ);
         if(-1*playerz>greatestZ) {
             gameover=true;
@@ -101,7 +104,29 @@ public class Display extends JComponent {
         }*/
 
         //System.out.println(playery);
-        this.repaint();
+        //this.repaint();
+        for (int i=stars.size()-1;i>-1;i--) {
+            Star s = stars.get(i);
+            if (s.getX()<0||s.getY()<0||s.getX()>WIDTH||s.getY()>HEIGHT) {
+                stars.remove(i);
+                double x = (Math.random()*WIDTH);
+                double y = (Math.random()*HEIGHT);
+                stars.add(new Star(x,y));
+                continue;
+            } 
+            if (s.getX()<WIDTH/2) {
+                s.setX(s.getX()-1);
+            }
+            if (s.getX()>WIDTH/2) {
+                s.setX(s.getX()+1);
+            }
+            if (s.getY()<HEIGHT/2) {
+                s.setY(s.getY()-1);
+            }
+            if (s.getY()>HEIGHT/2) {
+                s.setY(s.getY()+1);
+            } 
+        }
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -109,38 +134,7 @@ public class Display extends JComponent {
             g.setColor(new Color(255,255,255,180));
             for (int i=stars.size()-1;i>-1;i--) {
                 Star s = stars.get(i);
-                if (s.getX()<0||s.getY()<0||s.getX()>WIDTH||s.getY()>HEIGHT) {
-                    stars.remove(i);
-                    int x = (int)(Math.random()*WIDTH);
-                    int y = (int)(Math.random()*HEIGHT);
-                    stars.add(new Star(x,y));
-                    continue;
-                } 
-                if (s.getX()<WIDTH/2) {
-                    s.setX(s.getX()-1);
-                }
-                if (s.getX()>WIDTH/2) {
-                    s.setX(s.getX()+1);
-                }
-                if (s.getY()<HEIGHT/2) {
-                    s.setY(s.getY()-1);
-                }
-                if (s.getY()>HEIGHT/2) {
-                    s.setY(s.getY()+1);
-                } 
-                /*java.awt.geom.Point2D center = new java.awt.geom.Point2D.Float(s.getX(), s.getX());
-                float radius = 10;
-                java.awt.geom.Point2D focus = new java.awt.geom.Point2D.Float(s.getX()-10, s.getY()-10);
-                float[] dist = {0.0f, 0.5f, 1.0f};
-                Color[] colors = {new Color(255,255,255,255), new Color(255,255,255,180), new Color(255,255,255,100)};
-                RadialGradientPaint p =
-                new RadialGradientPaint(center, radius, focus,
-                                     dist, colors,
-                                     CycleMethod.NO_CYCLE);
-                Graphics2D g2D = (Graphics2D)g; 
-                g2D.setPaint(p);
-                g2D.fillRect(s.getX(),s.getY(),5,5);*/
-                g.fillRect(s.getX(),s.getY(),2,2);
+                g.fillRect((int)s.getX(),(int)s.getY(),2,2);
             }
             for(ZObject z : objects) {
                 if (z.getZ()<1000&&z.getZ()>-250) {
@@ -214,6 +208,22 @@ public class Display extends JComponent {
     }  
     public void move(char dir, double dis) {
         if (!paused) {
+            for(Star s : stars) {
+                if (dir == 'x') {
+                    if (dis>0) {
+                        s.setX(s.getX()+5);
+                    } else {
+                        s.setX(s.getX()-5);
+                    }
+                } else if (dir =='y') {
+                    if (dis>0) {
+                        s.setY(s.getY()+.5);
+                    } else {
+                        s.setY(s.getY()-.5);
+                    }                    
+                }
+            }
+            
             ArrayList<ZObject> tempzobj = new ArrayList<ZObject>();
             double xdist = 0;
             double ydist = 0;

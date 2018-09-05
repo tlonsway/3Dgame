@@ -11,7 +11,7 @@ public class FrameThread implements Runnable {
     public void run() {
         while(true) {
             if (!dis.getPaused()) {
-                dis.draw();
+                dis.frame();
             }
             try {
                 Thread.sleep((int)(1000/fps));
